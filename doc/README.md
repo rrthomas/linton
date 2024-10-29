@@ -4,7 +4,7 @@ Linton is a simple content management system that makes a static web site from a
 
 Linton comes with a simple web server that you can use to test a site in development.
 
-Get the code, file issues &c. on [GitHub](https://github.com/rrthomas/Linton).
+Get the code, file issues &c. on [GitHub](https://github.com/rrthomas/linton).
 
    * [Licence](Licence.html)
    * [About](About.html)

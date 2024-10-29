@@ -14,7 +14,7 @@ maintain, and its code should be easy to understand. It is released
 under the GNU General Public License version 3, or (at your option)
 any later version. There is no warranty.
 
-See https://rrthomas.github.io/Linton for more information.
+See https://rrthomas.github.io/linton for more information.
 
 
 ## Source code organization

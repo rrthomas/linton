@@ -7,8 +7,8 @@ You will also need the following Perl package: File::Slurp.
 Then run the following commands:
 
 ```
-git clone https://github.com/rrthomas/Linton
-cd Linton
+git clone https://github.com/rrthomas/linton
+cd linton
 ./install.sh /PATH/TO/YOUR/DOCUMENT-ROOT /PATH/TO/YOUR/BIN
 ```
 
