@@ -30,6 +30,5 @@ fi
 
 # Copy files
 INSTALL_DATA="install --mode=644"
-$INSTALL_DATA doc/style.css "$DOCUMENT_ROOT_DIR"
+$INSTALL_DATA doc/style.css doc/view.html "$DOCUMENT_ROOT_DIR"
 install bin/*.pl bin/linton "$INSTALL_DIR"
-$INSTALL_DATA bin/*.html bin/*.pm "$INSTALL_DIR"
