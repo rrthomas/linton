@@ -1,1 +1,1 @@
-doc/Licence.md
+doc/Licence/body.in.md

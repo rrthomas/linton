@@ -23,7 +23,7 @@ The files are organised as follows:
 
 <dl>
   <dt><code>bin</code></dt>
-  <dd>contains the main program <code>Linton.pm</code>, some helper modules in <code>MIME</code> and <code>RRT</code>, and the front-end script and configuration file <code>web.pl</code>.</dd>
+  <dd>contains the main program <code>linton</code>.</dd>
   <dt><code>doc</code></dt>
-  <dd>The documentation.</dd>
+  <dd>The documentation and helper scripts.</dd>
 </dl>

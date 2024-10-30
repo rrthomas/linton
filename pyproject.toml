@@ -7,15 +7,15 @@ authors = [
     {name = "Reuben Thomas", email = "rrt@sc3d.org"}
 ]
 readme = "README.md"
-urls = {Homepage = "https://github.com/rrthomas/psutils"}
+urls = {Homepage = "https://github.com/rrthomas/linton"}
 requires-python = ">= 3.9"
 classifiers = [
     "Environment :: Console",
     "Programming Language :: Python :: 3",
 ]
 
-#[project.scripts]
-#epsffit = "linton.command.linton:linton"
+[project.scripts]
+linton = "linton.command.linton:linton"
 
 [build-system]
 requires = [
@@ -23,25 +23,21 @@ requires = [
     "setuptools >= 60; python_version >= \"3.12\"",
 ]
 
-[tool.build_manpages]
-manpages = [
-    "linton.1:module=psutils.command.linton:function=get_parser:manual_title=User Command:include=linton-include.man",
-]
+# [tool.build_manpages]
+# manpages = [
+#     "linton.1:module=psutils.command.linton:function=get_parser:manual_title=User Command:include=linton-include.man",
+# ]
 
 [tool.mypy]
-exclude = [
-    '^dist',
-    '^build',
-    # '^tests-output',
-]
+exclude = ['^dist', '^build']
 strict = true
 
 [tool.pylint.main]
 # Use multiple processes to speed up Pylint: 0 = auto-detect.
 jobs = 0
 
-# [tool.pylint.MASTER]
-# init-hook = 'import sys; sys.path.append(".")'
+[tool.pylint.MASTER]
+init-hook = 'import sys; sys.path.append(".")'
 
 [tool.pylint.format]
 good-names = "e,f,h,i,j,m,n,s,t,w,up"
@@ -51,6 +47,7 @@ disable = [
     "missing-function-docstring",
     "no-member",
     "fixme",
+    "global-statement",
     "redefined-outer-name",
     "too-many-locals",
     "too-many-branches",
