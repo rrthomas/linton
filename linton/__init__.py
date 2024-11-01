@@ -148,7 +148,6 @@ def serve(args: argparse.Namespace) -> None:
 # Command-line arguments
 parser = argparse.ArgumentParser(
     description="Make a web site from Markdown files and other resources.",
-    epilog="The output DIRECTORY cannot be a subdirectory of the source directory.",
 )
 parser.add_argument(
     "-V",
@@ -157,7 +156,7 @@ parser.add_argument(
     version="%(prog)s 0.7 (22 Oct 2024) by Reuben Thomas <rrt@sc3d.org>",
 )
 
-subparsers = parser.add_subparsers(help="subcommand help")
+subparsers = parser.add_subparsers(required=True, title="subcommands")
 
 
 def add_subcommand_arguments(parser: argparse.ArgumentParser) -> None:
@@ -175,7 +174,11 @@ base_url: str
 document_root: Path
 render_env: dict[str, str]
 
-publish_parser = subparsers.add_parser("publish")
+publish_parser = subparsers.add_parser(
+    "publish",
+    help="convert a directory of Markdown files and other resources into a web site.",
+    epilog="The output DIRECTORY cannot be a subdirectory of the source directory.",
+)
 publish_parser.add_argument(
     "--force",
     action="store_true",
@@ -185,14 +188,14 @@ add_subcommand_arguments(publish_parser)
 publish_parser.add_argument("output", metavar="DIRECTORY", help="output directory")
 publish_parser.set_defaults(func=publish)
 
-serve_parser = subparsers.add_parser("serve")
+serve_parser = subparsers.add_parser(
+    "serve",
+    help="serve a Linton web site locally on your computer, for testing",
+)
 add_subcommand_arguments(serve_parser)
 serve_parser.set_defaults(func=serve)
 
 
 def main(argv: List[str] = sys.argv[1:]) -> None:
     args = parser.parse_args(argv)
-    if not hasattr(args, "func"):
-        parser.print_usage()
-        sys.exit(1)
     args.func(args)
