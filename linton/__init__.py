@@ -101,8 +101,6 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_response(404)
             self.send_header("Content-Type", "text/html")
             self.end_headers()
-            # FIXME: Use a 'notfound.nancy.html' template for this, as with
-            # DarkGlass. Resurrect the docs!
             self.wfile.write(
                 b"<html><head><title>No such page</title><body>No such page</body></html>"
             )
