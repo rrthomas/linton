@@ -3,6 +3,7 @@
 # © Reuben Thomas <rrt@sc3d.org> 2023-2024
 # Released under the GPL version 3, or (at your option) any later version.
 
+import importlib.metadata
 import os
 import sys
 import shutil
@@ -25,10 +26,16 @@ from typing import (
 from xdg import Mime
 
 
+VERSION = importlib.metadata.version("linton")
+
+
+prog: str
+
+
 # Error messages
 # pylint: disable=unused-argument, too-many-arguments, too-many-positional-arguments
 def simple_warning(message, category, filename, lineno, file, line):  # type: ignore
-    print(f"{parser.prog}: {message}", file=file or sys.stderr)
+    print(f"{prog}: {message}", file=file or sys.stderr)
 
 
 warnings.showwarning = simple_warning  # type: ignore
@@ -129,18 +136,16 @@ def serve(args: argparse.Namespace) -> None:
     httpd.serve_forever()
 
 
-# Command-line arguments
-parser = argparse.ArgumentParser(
-    description="Make a web site from Markdown files and other resources.",
-)
-parser.add_argument(
-    "-V",
-    "--version",
-    action="version",
-    version="%(prog)s 0.7 (22 Oct 2024) by Reuben Thomas <rrt@sc3d.org>",
-)
+# 'init' command
+def init(args: argparse.Namespace) -> None:
+    """'init' command handler"""
+    # Check directory does not exist.
+    if os.path.exists(args.directory):
+        die(1, f"output {args.directory} already exists")
 
-subparsers = parser.add_subparsers(required=True, title="subcommands")
+    # Copy the demo files to the new project
+    with importlib.resources.as_file(importlib.resources.files()) as fspath:
+        shutil.copytree(os.path.join(fspath, "doc"), args.directory)
 
 
 def add_subcommand_arguments(parser: argparse.ArgumentParser) -> None:
@@ -158,28 +163,50 @@ base_url: str
 document_root: Path
 render_env: dict[str, str]
 
-publish_parser = subparsers.add_parser(
-    "publish",
-    help="convert a directory of Markdown files and other resources into a web site.",
-    epilog="The output DIRECTORY cannot be a subdirectory of the source directory.",
-)
-publish_parser.add_argument(
-    "--force",
-    action="store_true",
-    help="overwrite output directory even if it is not empty",
-)
-add_subcommand_arguments(publish_parser)
-publish_parser.add_argument("output", metavar="DIRECTORY", help="output directory")
-publish_parser.set_defaults(func=publish)
-
-serve_parser = subparsers.add_parser(
-    "serve",
-    help="serve a Linton web site locally on your computer, for testing",
-)
-add_subcommand_arguments(serve_parser)
-serve_parser.set_defaults(func=serve)
-
-
 def main(argv: List[str] = sys.argv[1:]) -> None:
+    # Command-line arguments
+    parser = argparse.ArgumentParser(
+        description="Make a web site from Markdown files and other resources.",
+    )
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=f"%(prog)s {VERSION} (22 Oct 2024) by Reuben Thomas <rrt@sc3d.org>",
+    )
+
+    subparsers = parser.add_subparsers(required=True, title="subcommands")
+
+
+    publish_parser = subparsers.add_parser(
+        "publish",
+        help="convert a directory of Markdown files and other resources into a web site.",
+        epilog="The output DIRECTORY cannot be a subdirectory of the source directory.",
+    )
+    publish_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="overwrite output directory even if it is not empty",
+    )
+    add_subcommand_arguments(publish_parser)
+    publish_parser.add_argument("output", metavar="DIRECTORY", help="output directory")
+    publish_parser.set_defaults(func=publish)
+
+    serve_parser = subparsers.add_parser(
+        "serve",
+        help="serve a Linton web site locally on your computer, for testing",
+    )
+    add_subcommand_arguments(serve_parser)
+    serve_parser.set_defaults(func=serve)
+
+    init_parser = subparsers.add_parser(
+        "init",
+        help="create a new Linton project",
+    )
+    init_parser.add_argument("directory", metavar="DIRECTORY", help="output directory")
+    init_parser.set_defaults(func=init)
+
+    global prog
+    prog = parser.prog
     args = parser.parse_args(argv)
     args.func(args)

@@ -12,7 +12,7 @@ pip install linton
 To create a new Linton web site, use:
 
 ```
-linton init DIRECTORY # FIXME: implement this
+linton init DIRECTORY
 ```
 
 where `DIRECTORY` is the directory in which to write the new web site’s

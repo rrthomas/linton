@@ -36,7 +36,7 @@ jobs:
           sudo apt-get -y install discount python3-xdg npm
           npm install -g @sc3d/nancy
       - name: Build pages
-        run: PYTHONPATH=. python -m linton publish --force /linton/ ./doc ./_site
+        run: PYTHONPATH=. python -m linton publish --force /linton/ ./linton/doc ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
