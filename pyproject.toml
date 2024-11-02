@@ -29,7 +29,7 @@ requires = [
 # ]
 
 [tool.mypy]
-exclude = ['^dist', '^build']
+exclude = ['^dist', '^build', '^linton/init-pages']
 strict = true
 
 [tool.pylint.main]

@@ -1,12 +1,13 @@
 # Makefile for maintainer tasks
 
-all: README.md
+build:
+	python -m build
 
 dist: all
 	git diff --exit-code && \
 	rm -rf ./dist && \
 	mkdir dist && \
-	python -m build
+	$(MAKE) build
 
 test:
 	tox

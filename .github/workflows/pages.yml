@@ -33,10 +33,12 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install dependencies
         run: |
-          sudo apt-get -y install discount python3-xdg npm
+          sudo apt-get -y install discount python3-build python3-venv python3-xdg npm make
           npm install -g @sc3d/nancy
       - name: Build pages
-        run: PYTHONPATH=. python -m linton publish --force /linton/ ./doc ./_site
+        run: |
+          make build
+          PYTHONPATH=. python -m linton publish --force /linton/ ./doc ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
