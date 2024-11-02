@@ -7,5 +7,5 @@ import os.path
 page = sys.argv[1]
 
 pagename = os.path.dirname(page)
-if pagename != ".":
+if pagename != "":
     print(f": {pagename}")
