@@ -40,6 +40,7 @@ jobs = 0
 init-hook = 'import sys; sys.path.append(".")'
 
 [tool.pylint.format]
+const-naming-style = "any"
 good-names = "e,f,h,i,j,m,n,s,t,w,up"
 disable = [
     "missing-module-docstring",

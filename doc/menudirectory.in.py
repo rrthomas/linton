@@ -53,7 +53,7 @@ DocumentRoot = os.environ["LINTON_DOCUMENT_ROOT"]
 
 path = os.path.dirname(directory)
 if path == "./":
-    path = ""  # pylint: disable=invalid-name
+    path = ""
 directory = os.path.join(DocumentRoot, path)
 url = urllib.parse.quote(path)
 if url != "":
