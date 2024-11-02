@@ -60,29 +60,22 @@ def set_globals(args: argparse.Namespace) -> None:
     render_env["LINTON_DOCUMENT_ROOT"] = str(document_root)
 
 
-
 # 'publish' command
 def publish(args: argparse.Namespace) -> None:
     """'publish' command handler"""
     set_globals(args)
 
-    # Check output directory is not under document_root
-    # FIXME: move this functionality to Nancy
-    output_path = Path(args.output)
-    if output_path.absolute().is_relative_to(document_root):
-        die(1, "output directory cannot be a subdirectory of input")
-
-    # Ensure output directory exists and is empty
-    # FIXME: move this functionality to Nancy
-    os.makedirs(output_path, exist_ok=True)
-    if len(os.listdir(output_path)) > 0:
+    # Check output either does not exist, or is an empty directory, unless
+    # --force given.
+    if os.path.exists(args.output) and not (
+        os.path.isdir(args.output) and len(os.listdir(args.output)) == 0
+    ):
         if not args.force:
-            die(1, f"output directory {output_path} is not empty")
-        shutil.rmtree(output_path)
-        os.mkdir(output_path)
+            die(1, f"output {args.output} is not an empty directory")
+        shutil.rmtree(args.output)
 
     # Render the project files to the output
-    subprocess.check_output(["nancy", document_root, output_path], env=render_env)
+    subprocess.check_output(["nancy", document_root, args.output], env=render_env)
 
 
 # 'serve' command
