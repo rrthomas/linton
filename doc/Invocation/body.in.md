@@ -17,3 +17,9 @@ $paste{/bin/sh,-c,PYTHONPATH=. python -m linton publish --help | sed -e 's/usage
 ```
 $paste{/bin/sh,-c,PYTHONPATH=. python -m linton serve --help | sed -e 's/usage: -m/linton/'}
 ```
+
+## `linton init`
+
+```
+$paste{/bin/sh,-c,PYTHONPATH=. python -m linton init --help | sed -e 's/usage: -m/linton/'}
+```

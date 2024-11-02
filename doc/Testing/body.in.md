@@ -8,5 +8,4 @@ To launch the server, run:
 python /PATH/TO/BIN/linton serve
 ```
 
-The script will find an unused port on localhost, and print a message
-telling you what port it is running on.
+The script will find an unused port on localhost, and print a message telling you what port it is running on.

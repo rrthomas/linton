@@ -1,16 +1,19 @@
 # Linton
 
-Linton is a simple content management system that makes a static web site from a collection of files providing the content. The overall look of the site is controlled by HTML templates. Linton pages are written as Markdown.
+Linton is a simple static web site builder that produces a web site from a collection of Markdown files and other resources. The overall look of the site is controlled by an HTML template and CSS stylesheet that can be edited by any text editor. Linton pages are written as Markdown.
 
-Linton comes with a simple web server that you can use to test a site in development.
+Linton comes with a simple web server that you can use to test a site in development. As it produces entirely static web sites (just a collection of files), they should be easy to install on any web server.
 
-Get the code, file issues &c. on [GitHub](https://github.com/rrthomas/linton).
+Get the code, file issues etc. on [GitHub](https://github.com/rrthomas/linton).
 
-   * [Licence](Licence/index.html)
-   * [About](About/index.html)
-   * [Why Linton?](Why Linton%3F/index.html)
-   * [Usage](Usage/index.html)
-   * [Installation instructions](Installation/index.html)
-   * [Testing](Testing/index.html)
-   * [Customization](Customization/index.html)
-   * [Acknowledgements](Acknowledgements/index.html)
+Some documentation links that may help to get you started are below; see the menu for a full list.
+
++ [Why Linton?](<Why Linton%3F>)
++ [Licence](Licence)
++ [Installation instructions](Installation)
++ [How to run Linton](Invocation)
++ [Template](Template)
++ [Writing web pages for Linton](Conventions)
++ [Testing](Testing)
++ [Security](Security)
++ [Acknowledgements](Acknowledgements)
