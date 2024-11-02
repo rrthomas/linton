@@ -26,19 +26,12 @@ from xdg import Mime
 
 
 # Error messages
-def simple_warning(  # pylint: disable=too-many-positional-arguments,too-many-arguments
-    message: Union[Warning, str],
-    category: Type[Warning],  # pylint: disable=unused-argument
-    filename: str,  # pylint: disable=unused-argument
-    lineno: int,  # pylint: disable=unused-argument
-    file: Optional[TextIO] = sys.stderr,
-    line: Optional[str] = None,  # pylint: disable=unused-argument
-) -> None:
-    """Print an error message."""
+# pylint: disable=unused-argument, too-many-arguments, too-many-positional-arguments
+def simple_warning(message, category, filename, lineno, file, line):  # type: ignore
     print(f"{parser.prog}: {message}", file=file or sys.stderr)
 
 
-warnings.showwarning = simple_warning
+warnings.showwarning = simple_warning  # type: ignore
 
 
 def die(code: int, msg: str) -> NoReturn:
