@@ -145,7 +145,7 @@ def init(args: argparse.Namespace) -> None:
 
     # Copy the demo files to the new project
     with importlib.resources.as_file(importlib.resources.files()) as fspath:
-        shutil.copytree(os.path.join(fspath, "doc"), args.directory)
+        shutil.copytree(os.path.join(fspath, "init-pages"), args.directory)
 
 
 def add_subcommand_arguments(parser: argparse.ArgumentParser) -> None:

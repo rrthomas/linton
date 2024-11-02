@@ -16,8 +16,7 @@ linton init DIRECTORY
 ```
 
 where `DIRECTORY` is the directory in which to write the new web site’s
-pages and ancillary files. This will be a copy of Linton’s documentation to
-start with.
+pages and ancillary files. Linton copies the default Linton site template files and a couple of sample pages into the directory you specify.
 
 Then, configure Linton as described in [Configuration](Configuration/index.html).
 
