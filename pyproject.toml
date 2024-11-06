@@ -53,6 +53,7 @@ disable = [
     "redefined-outer-name",
     "too-many-locals",
     "too-many-branches",
+    "too-many-positional-arguments",
 ]
 enable = [
     "useless-suppression",
