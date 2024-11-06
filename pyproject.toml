@@ -20,7 +20,7 @@ linton = "linton.command.linton:linton"
 
 [build-system]
 requires = [
-    "setuptools >= 60; python_version >= \"3.12\"",
+    "setuptools >= 60",
 ]
 
 [tool.mypy]
