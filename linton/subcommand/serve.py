@@ -25,14 +25,14 @@ def serve(args: argparse.Namespace, render_env: dict[str, str]) -> None:
             filename = None
             expand = False
             url_path = urllib.parse.unquote(
-                os.path.splitroot(self.path.removeprefix(args.base_url))[2]
-            ).removesuffix("/")
+                urllib.parse.urlparse(self.path.removeprefix(args.base_url)).path
+            )
             input_path = os.path.join(args.document_root, url_path)
             if os.path.isdir(input_path):
                 index_path = os.path.join(input_path, "body.in.md")
                 if os.path.exists(index_path):
                     self.send_response(302)
-                    self.send_header("Location", os.path.join(url_path, "index.html"))
+                    self.send_header("Location", os.path.join(self.path, "index.html"))
                     self.end_headers()
                     return
             elif os.path.isfile(input_path):
