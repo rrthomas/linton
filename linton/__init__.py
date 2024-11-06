@@ -53,6 +53,8 @@ def main(argv: List[str] = sys.argv[1:]) -> None:
     add_init_subparser(subparsers)
 
     args = parser.parse_args(argv)
+    if "base_url" not in args:
+        args.base_url = "/"
 
     # Set up environment for executable $include scripts.
     render_env = dict(os.environ)

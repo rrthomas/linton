@@ -9,10 +9,5 @@ import argparse
 
 def add_subcommand_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
-        "base_url",
-        metavar="URL",
-        help="base URL of web site relative to root of server",
-    )
-    parser.add_argument(
         "document_root", metavar="DIRECTORY", help="directory containing source files"
     )

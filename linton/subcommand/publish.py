@@ -39,6 +39,12 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:  # type: igno
         action="store_true",
         help="overwrite output directory even if it is not empty",
     )
+    parser.add_argument(
+        "--base-url",
+        metavar="URL",
+        help="base URL of web site relative to root of server [default: %(default)s]",
+        default="/",
+    )
     add_subcommand_arguments(parser)
     parser.add_argument("output", metavar="DIRECTORY", help="output directory")
     parser.set_defaults(func=publish)

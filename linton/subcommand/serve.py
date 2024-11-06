@@ -70,7 +70,7 @@ def serve(args: argparse.Namespace, render_env: dict[str, str]) -> None:
 
     httpd = HTTPServer(("localhost", 0), HTTPRequestHandler)
     [host, port] = httpd.server_address
-    print(f"Connect to server at http://{str(host)}:{port}{args.base_url}")
+    print(f"Connect to server at http://{str(host)}:{port}")
     httpd.serve_forever()
 
 
