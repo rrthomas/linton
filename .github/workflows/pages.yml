@@ -38,7 +38,7 @@ jobs:
       - name: Build pages
         run: |
           make build
-          PYTHONPATH=. python -m linton publish --force /linton/ ./doc ./_site
+          PYTHONPATH=. python -m linton publish --base-url /linton/ ./doc ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
