@@ -20,14 +20,8 @@ linton = "linton.command.linton:linton"
 
 [build-system]
 requires = [
-#    "argparse-manpage[setuptools] >= 4.2",
     "setuptools >= 60; python_version >= \"3.12\"",
 ]
-
-# [tool.build_manpages]
-# manpages = [
-#     "linton.1:module=psutils.command.linton:function=get_parser:manual_title=User Command:include=linton-include.man",
-# ]
 
 [tool.mypy]
 exclude = ['^dist', '^build', '^linton/init-pages']
