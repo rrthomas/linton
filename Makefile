@@ -3,7 +3,7 @@
 build:
 	python -m build
 
-dist: all
+dist:
 	git diff --exit-code && \
 	rm -rf ./dist && \
 	mkdir dist && \
