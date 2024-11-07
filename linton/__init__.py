@@ -6,26 +6,12 @@
 import importlib.metadata
 import os
 import sys
-import shutil
-from pathlib import Path
 import argparse
-import subprocess
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import urllib
 import warnings
 from warnings import warn
-from typing import (
-    Optional,
-    List,
-    Union,
-    Type,
-    NoReturn,
-    TextIO,
-)
+from typing import List
 
-from xdg import Mime
-
-from .warnings import simple_warning, die
+from .warnings import simple_warning
 from .subcommand.publish import publish, add_subparser as add_publish_subparser
 from .subcommand.serve import serve, add_subparser as add_serve_subparser
 from .subcommand.init import init, add_subparser as add_init_subparser
