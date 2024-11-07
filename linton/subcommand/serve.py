@@ -28,14 +28,7 @@ def serve(args: argparse.Namespace, render_env: dict[str, str]) -> None:
                 urllib.parse.urlparse(self.path.removeprefix(args.base_url)).path
             )
             input_path = os.path.join(args.document_root, url_path)
-            if os.path.isdir(input_path):
-                index_path = os.path.join(input_path, "body.in.md")
-                if os.path.exists(index_path):
-                    self.send_response(302)
-                    self.send_header("Location", os.path.join(self.path, "index.html"))
-                    self.end_headers()
-                    return
-            elif os.path.isfile(input_path):
+            if os.path.isfile(input_path):
                 filename = input_path
             elif os.path.basename(input_path) == "index.html":
                 # If an 'index.html' is not found but it has a Nancy source file, use it.
@@ -70,7 +63,7 @@ def serve(args: argparse.Namespace, render_env: dict[str, str]) -> None:
 
     httpd = HTTPServer(("localhost", 0), HTTPRequestHandler)
     [host, port] = httpd.server_address
-    print(f"Connect to server at http://{str(host)}:{port}")
+    print(f"Connect to server at http://{str(host)}:{port}/index.html")
     httpd.serve_forever()
 
 
