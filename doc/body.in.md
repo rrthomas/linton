@@ -8,7 +8,7 @@ Get the code, file issues etc. on [GitHub](https://github.com/rrthomas/linton).
 
 Some documentation links that may help to get you started are below; see the menu for a full list.
 
-+ [Why Linton?](<Why Linton%3F>)
++ [Why Linton?](<Why Linton%3F/>)
 + [Licence](Licence)
 + [Installation instructions](Installation)
 + [How to run Linton](Invocation)

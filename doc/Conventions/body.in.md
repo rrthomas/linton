@@ -9,3 +9,9 @@ Each page is stored in its own directory, and named `index.html`. This is done s
 This means that published URLs for your web site never need to include `.html`, as, for example, the page `foo/bar/index.html` will have a URL that ends `foo/bar`.
 
 For details of how the page is structured internally, see [Template](Template).
+
+## Page names including reserved characters
+
+Note that links to Linton pages whose names contain certain characters must be [percent-encoded](https://en.wikipedia.org/wiki/Percent-encoding), so that characters with special significance to web servers, such as question mark, are not treated as special. (Deliberately using these characters with their special meaning is fine!)
+
+It is also safer to add a trailing slash to links to Linton pages, as otherwise some web servers still seem to misinterpret them. For example, link to a page called “Why?” with the relative URL `Why%3F/`, rather than just `Why%3F`.

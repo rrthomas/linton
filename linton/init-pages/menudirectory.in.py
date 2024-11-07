@@ -22,7 +22,7 @@ def make_directory(
     dirs = ""
     for entry in sorted(entries):
         quoted_entry = urllib.parse.quote(entry)
-        link = f'<a href="{BaseUrl}{url}{quoted_entry}">{entry}</a>'
+        link = f'<a href="{BaseUrl}{url}{quoted_entry}/">{entry}</a>'
         entry_path = os.path.join(path, entry)
         add_directory = False
         for subentry in os.listdir(entry_path):
