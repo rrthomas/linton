@@ -33,7 +33,7 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install dependencies
         run: |
-          sudo apt-get -y install discount python3-build python3-venv python3-xdg npm make
+          sudo apt-get -y install discount python3-build python3-venv python3-xdg python3-importlib-resources npm make
           npm install -g @sc3d/nancy
       - name: Build pages
         run: |
