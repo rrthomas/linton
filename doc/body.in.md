@@ -8,12 +8,12 @@ Get the code, file issues etc. on [GitHub](https://github.com/rrthomas/linton).
 
 Some documentation links that may help to get you started are below; see the menu for a full list.
 
-+ [Why Linton?](<Why Linton%3F/>)
-+ [Licence](Licence)
-+ [Installation instructions](Installation)
-+ [How to run Linton](Invocation)
-+ [Template](Template)
-+ [Writing web pages for Linton](Conventions)
-+ [Testing](Testing)
-+ [Security](Security)
-+ [Acknowledgements](Acknowledgements)
++ [Why Linton?](<Why Linton%3F/index.html>)
++ [Licence](Licence/index.html)
++ [Installation instructions](Installation/index.html)
++ [How to run Linton](Invocation/index.html)
++ [Template](Template/index.html)
++ [Writing web pages for Linton](Conventions/index.html)
++ [Testing](Testing/index.html)
++ [Security](Security/index.html)
++ [Acknowledgements](Acknowledgements/index.html)

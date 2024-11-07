@@ -22,7 +22,7 @@ def make_directory(
     dirs = ""
     for entry in sorted(entries):
         quoted_entry = urllib.parse.quote(entry)
-        link = f'<a href="{BaseUrl}{url}{quoted_entry}/">{entry}</a>'
+        link = f'<a href="$include{{path-to-root.in.py,$path}}/{url}{quoted_entry}/">{entry}</a>'
         entry_path = os.path.join(path, entry)
         add_directory = False
         for subentry in os.listdir(entry_path):
@@ -48,7 +48,6 @@ link_classes = maybe_argv(3) or "nav-link"
 dir_link_classes = maybe_argv(4) or "nav-link nav-directory"
 
 # Get globals from environment variables
-BaseUrl = os.environ["LINTON_BASE_URL"]
 DocumentRoot = os.environ["LINTON_DOCUMENT_ROOT"]
 
 path = os.path.dirname(directory)

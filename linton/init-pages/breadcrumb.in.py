@@ -3,9 +3,6 @@
 import sys
 import os.path
 
-# Get globals from environment variables
-BaseUrl = os.environ["LINTON_BASE_URL"]
-
 # Get command-line arguments
 page = sys.argv[1]
 
@@ -20,8 +17,14 @@ desc = os.path.basename(parents)
 tree = ""
 classes = "breadcrumb-item breadcrumb-active"
 while parents not in ("", ".", "/"):
-    tree = f'<li class="{classes}"><a href="{BaseUrl}{parents}">{desc}</a></li>{tree}'
+    tree = f'<li class="{classes}">' + \
+        f'<a href="$include{{path-to-root.in.py,$path}}{parents}">{desc}</a>' + \
+        f'</li>{tree}'
     classes = "breadcrumb-item"
     parents = os.path.dirname(parents)
     desc = os.path.basename(parents)
-print(f'<li class="breadcrumb-item"><a href="{BaseUrl}">$include{{Title.in.txt}}</a></li>{tree}')
+print(
+    '<li class="breadcrumb-item">' + \
+    '<a href="$include{path-to-root.in.py,$path}">$include{Title.in.txt}</a>' + \
+    f'</li>{tree}'
+)

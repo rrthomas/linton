@@ -8,7 +8,13 @@ Each page is stored in its own directory, and named `index.html`. This is done s
 
 This means that published URLs for your web site never need to include `.html`, as, for example, the page `foo/bar/index.html` will have a URL that ends `foo/bar`.
 
-For details of how the page is structured internally, see [Template](Template).
+For details of how the page is structured internally, see [Template](Template/index.html).
+
+## Links
+
+To make Linton sites work offline (that is, when browsed as a simple collection of files), links to pages within a site should always end in `/index.html`.
+
+When referring to a page or other resource using a site-relative URL, use the helper script `path-to-root.in.py`. For example, when referring to the page `/foo/bar/index.html`, write the URL as `$paste{path-to-root.in.py,$path}/foo/bar/index.html`. This ensures that the link will work when the site is not served from the root of its domain (for example, if the home page is at `https://example.org/home/page` rather than `https://example.org/`), and also offline.
 
 ## Page names including reserved characters
 
