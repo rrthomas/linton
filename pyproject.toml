@@ -26,6 +26,9 @@ requires = [
     "setuptools >= 60",
 ]
 
+[tool.setuptools]
+packages = ["linton"]
+
 [tool.mypy]
 exclude = ['^dist', '^build', '^linton/init-pages']
 strict = true

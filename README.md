@@ -1,5 +1,7 @@
 # Linton
 
+![logo](logo/linton.svg)
+
 Reuben Thomas (rrt@sc3d.org)
 
 Linton is a simple web site builder that converts a tree of Markdown files
