@@ -13,7 +13,7 @@ import importlib_resources
 from linton.warnings_util import die
 
 
-def init(args: argparse.Namespace) -> None:
+def init(args: argparse.Namespace, render_env: dict[str, str]) -> None:
     """'init' command handler"""
     # Check directory does not exist.
     if os.path.exists(args.directory):

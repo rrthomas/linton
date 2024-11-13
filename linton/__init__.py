@@ -42,8 +42,4 @@ def main(argv: List[str] = sys.argv[1:]) -> None:
     if "base_url" not in args:
         args.base_url = "/"
 
-    # Set up environment for executable $include scripts.
-    render_env = dict(os.environ)
-    render_env["LINTON_DOCUMENT_ROOT"] = args.document_root
-
-    args.func(args, render_env)
+    args.func(args, dict(os.environ))
