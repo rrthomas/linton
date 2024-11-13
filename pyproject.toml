@@ -33,7 +33,7 @@ packages = [
 ]
 
 [tool.setuptools.package-data]
-linton = ["init-pages/*"]
+linton = ["init-pages/**"]
 
 [tool.mypy]
 exclude = ['^dist', '^build', '^linton/init-pages']
