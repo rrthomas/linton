@@ -19,7 +19,7 @@ classifiers = [
 ]
 
 [project.scripts]
-linton = "linton.command.linton:linton"
+linton = "linton:main"
 
 [build-system]
 requires = [
@@ -27,7 +27,13 @@ requires = [
 ]
 
 [tool.setuptools]
-packages = ["linton"]
+packages = [
+    "linton",
+    "linton.subcommand",
+]
+
+[tool.setuptools.package-data]
+linton = ["init-pages/*"]
 
 [tool.mypy]
 exclude = ['^dist', '^build', '^linton/init-pages']
