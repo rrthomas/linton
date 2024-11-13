@@ -13,7 +13,7 @@ import importlib_resources
 from linton.warnings_util import die
 
 
-def init(args: argparse.Namespace, render_env: dict[str, str]) -> None:
+def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
     """'init' command handler"""
     # Check directory does not exist.
     if os.path.exists(args.directory):
@@ -30,4 +30,4 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:  # type: igno
         help="create a new Linton project",
     )
     parser.add_argument("directory", metavar="DIRECTORY", help="output directory")
-    parser.set_defaults(func=init)
+    parser.set_defaults(func=run)

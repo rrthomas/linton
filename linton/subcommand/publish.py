@@ -13,7 +13,7 @@ from linton.warnings_util import die
 from linton.argparse_util import add_subcommand_arguments
 
 
-def publish(args: argparse.Namespace, render_env: dict[str, str]) -> None:
+def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
     """'publish' command handler"""
     render_env["LINTON_DOCUMENT_ROOT"] = args.document_root
 
@@ -49,4 +49,4 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:  # type: igno
     )
     add_subcommand_arguments(parser)
     parser.add_argument("output", metavar="DIRECTORY", help="output directory")
-    parser.set_defaults(func=publish)
+    parser.set_defaults(func=run)

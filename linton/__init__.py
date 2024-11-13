@@ -12,9 +12,7 @@ from warnings import warn
 from typing import List
 
 from .warnings_util import simple_warning
-from .subcommand.publish import publish, add_subparser as add_publish_subparser
-from .subcommand.serve import serve, add_subparser as add_serve_subparser
-from .subcommand.init import init, add_subparser as add_init_subparser
+from .subcommand import publish, serve, init
 
 
 VERSION = importlib.metadata.version("linton")
@@ -34,9 +32,9 @@ def main(argv: List[str] = sys.argv[1:]) -> None:
     warnings.showwarning = simple_warning(parser.prog)
 
     subparsers = parser.add_subparsers(required=True, title="subcommands", metavar="SUBCOMMAND")
-    add_publish_subparser(subparsers)
-    add_serve_subparser(subparsers)
-    add_init_subparser(subparsers)
+    publish.add_subparser(subparsers)
+    serve.add_subparser(subparsers)
+    init.add_subparser(subparsers)
 
     args = parser.parse_args(argv)
     if "base_url" not in args:

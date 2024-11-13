@@ -15,8 +15,7 @@ from xdg import Mime
 from linton.argparse_util import add_subcommand_arguments
 
 
-# 'serve' command
-def serve(args: argparse.Namespace, render_env: dict[str, str]) -> None:
+def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
     """'serve' command handler"""
 
     class HTTPRequestHandler(BaseHTTPRequestHandler):
@@ -74,4 +73,4 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:  # type: igno
         help="serve a Linton web site locally on your computer, for testing",
     )
     add_subcommand_arguments(parser)
-    parser.set_defaults(func=serve)
+    parser.set_defaults(func=run)
