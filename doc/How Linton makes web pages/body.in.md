@@ -14,4 +14,4 @@ Now, we will outline how Linton builds web pages, and explain some conventions t
     + Files whose names contain the suffix `.in` are not copied to the final web site (they are only used for *in*put).
     + Files whose names contain the suffix `.nancy`, usually either HTML or Markdown files, are sent to Nancy for macro expansion. The result is written to the output with the `.nancy` suffix removed: for example, `index.nancy.html` expands to a file called `index.html`.
 
-For more information about the page template, see [Template](Template/index.html).
+For more information about the page template, see [Template](../Template/index.html).

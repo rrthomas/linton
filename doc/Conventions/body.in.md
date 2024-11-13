@@ -8,7 +8,7 @@ Each page is stored in its own directory, and named `index.html`. This is done s
 
 This means that published URLs for your web site never need to include `.html`, as, for example, the page `foo/bar/index.html` will have a URL that ends `foo/bar`.
 
-For details of how the page is structured internally, see [Template](Template/index.html).
+For details of how the page is structured internally, see [Template](../Template/index.html).
 
 ## Links
 
