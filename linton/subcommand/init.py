@@ -21,7 +21,7 @@ def init(args: argparse.Namespace, render_env: dict[str, str]) -> None:
 
     # Copy the demo files to the new project
     with importlib_resources.as_file(importlib_resources.files()) as fspath:
-        shutil.copytree(os.path.join(fspath, "init-pages"), args.directory)
+        shutil.copytree(os.path.join(fspath, "..", "init-pages"), args.directory)
 
 
 def add_subparser(subparsers: argparse._SubParsersAction) -> None:  # type: ignore[type-arg]
