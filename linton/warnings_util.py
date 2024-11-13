@@ -19,7 +19,7 @@ def simple_warning(prog: str) -> Callable[..., None]:
         file: Optional[TextIO] = sys.stderr,
         line: Optional[str] = None,  # pylint: disable=unused-argument
     ) -> None:
-        print(f"\n{prog}: {message}", file=file or sys.stderr)
+        print(f"{prog}: {message}", file=file or sys.stderr)
 
     return _warning
 

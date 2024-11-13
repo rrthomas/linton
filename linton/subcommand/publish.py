@@ -9,7 +9,7 @@ import argparse
 import shutil
 import subprocess
 
-from linton.warnings import die
+from linton.warnings_util import die
 from linton.argparse_util import add_subcommand_arguments
 
 

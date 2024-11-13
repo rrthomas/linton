@@ -10,7 +10,7 @@ import shutil
 
 import importlib_resources
 
-from linton.warnings import die
+from linton.warnings_util import die
 
 
 def init(args: argparse.Namespace) -> None:
