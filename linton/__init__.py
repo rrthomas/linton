@@ -33,7 +33,7 @@ def main(argv: List[str] = sys.argv[1:]) -> None:
     )
     warnings.showwarning = simple_warning(parser.prog)
 
-    subparsers = parser.add_subparsers(required=True, title="subcommands")
+    subparsers = parser.add_subparsers(required=True, title="subcommands", metavar="SUBCOMMAND")
     add_publish_subparser(subparsers)
     add_serve_subparser(subparsers)
     add_init_subparser(subparsers)
