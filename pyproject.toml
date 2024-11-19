@@ -26,7 +26,7 @@ test = ["pytest"]
 
 [build-system]
 requires = [
-    "setuptools >= 60",
+    "setuptools >= 62.3.0",
 ]
 
 [tool.setuptools]
