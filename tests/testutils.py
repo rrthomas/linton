@@ -6,7 +6,6 @@ Released under the GPL version 3, or (at your option) any later version.
 
 import contextlib
 import io
-import os
 import sys
 import re
 import filecmp
