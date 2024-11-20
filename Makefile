@@ -18,3 +18,5 @@ release:
 	twine upload dist/* && \
 	git tag v$$(grep version pyproject.toml | grep -o "[0-9.]\+") && \
 	git push --tags
+
+.PHONY: dist
