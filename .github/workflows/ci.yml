@@ -18,7 +18,7 @@ jobs:
     - name: Install dependencies (macOS)
       if: ${{ matrix.os == 'macos-latest' }}
       run: |
-        brew install tox npm
+        brew install tox npm discount
         # Prepend optional brew binary directories to PATH
         echo "$(brew --prefix)/opt/python/libexec/bin" >> $GITHUB_PATH
         npm install -g @sc3d/nancy
