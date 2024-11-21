@@ -22,6 +22,7 @@ pytestmark = make_tests(
 )
 
 
+# pylint: disable=similarities
 def test_init(
     function: Callable[[List[str]], None],
     case: Case,

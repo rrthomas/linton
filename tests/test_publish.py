@@ -24,6 +24,7 @@ pytestmark = make_tests(
 )
 
 
+# pylint: disable=similarities
 def test_publish(
     function: Callable[[List[str]], None],
     case: Case,
