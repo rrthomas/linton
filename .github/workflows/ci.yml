@@ -27,4 +27,4 @@ jobs:
         if [ "$RUNNER_OS" != "macOS" ]; then
           pip install tox
         fi
-        tox --skip-missing-interpreters
+        tox
