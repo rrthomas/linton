@@ -7,7 +7,6 @@ Released under the GPL version 3, or (at your option) any later version.
 import contextlib
 import filecmp
 import io
-import os
 import re
 import shutil
 import sys
@@ -49,7 +48,9 @@ def dir_test(
         fixture_dir / subcommand_name / case.name / "expected-stderr.txt"
     )
     patched_argv = [subcommand_name, *(sys.argv[1:])]
-    with tempfile.TemporaryDirectory(delete="DEBUG" not in os.environ) as tmpdir:
+    # FIXME: when we can assume Python ≥ 3.12, use
+    # `TemporaryDirectory(delete="DEBUG" not in os.environ)`
+    with tempfile.TemporaryDirectory() as tmpdir:
         output_dir = Path(tmpdir) / "output"
         full_args = [*case.args, str(output_dir)]
         if case.error is None:
