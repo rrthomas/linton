@@ -6,7 +6,6 @@ import os
 import sys
 import argparse
 import warnings
-from warnings import warn
 from typing import List
 
 from .warnings_util import simple_warning
