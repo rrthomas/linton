@@ -1,16 +1,16 @@
-"""
-Linton 'publish' subcommand
+"""Linton 'publish' subcommand
+
 © Reuben Thomas <rrt@sc3d.org> 2024
 Released under the GPL version 3, or (at your option) any later version.
 """
 
-import os
 import argparse
+import os
 import shutil
 import subprocess
 
-from linton.warnings_util import die
 from linton.argparse_util import add_subcommand_arguments
+from linton.warnings_util import die
 
 
 def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:

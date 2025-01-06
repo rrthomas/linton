@@ -1,16 +1,17 @@
-"""
-'linton publish' tests.
+"""'linton publish' tests.
+
 Copyright (c) Reuben Thomas 2024.
 Released under the GPL version 3, or (at your option) any later version.
 """
 
 from pathlib import Path
-from typing import List, Callable
+from typing import Callable
 
 from pytest import CaptureFixture
+from testutils import Case, dir_test, make_tests
 
-from testutils import dir_test, make_tests, Case
 from linton import main
+
 
 test_files_dir = Path(__file__).parent.resolve() / "test-files"
 
@@ -24,9 +25,8 @@ pytestmark = make_tests(
 )
 
 
-# pylint: disable=similarities
 def test_publish(
-    function: Callable[[List[str]], None],
+    function: Callable[[list[str]], None],
     case: Case,
     fixture_dir: Path,
     capsys: CaptureFixture[str],

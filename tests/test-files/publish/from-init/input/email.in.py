@@ -3,6 +3,7 @@
 import sys
 from typing import Optional
 
+
 # Read command-line arguments
 def maybe_argv(n: int) -> Optional[str]:
     return sys.argv[n] if len(sys.argv) > n else None

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import sys
 import os.path
+import sys
+
 
 # Get command-line arguments
 page = sys.argv[1]

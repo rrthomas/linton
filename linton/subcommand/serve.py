@@ -1,14 +1,14 @@
-"""
-Linton 'serve' subcommand
+"""Linton 'serve' subcommand
+
 © Reuben Thomas <rrt@sc3d.org> 2024
 Released under the GPL version 3, or (at your option) any later version.
 """
 
-import os
 import argparse
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import urllib
+import os
 import subprocess
+import urllib
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from xdg import Mime
 
@@ -19,7 +19,7 @@ def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
     """'serve' command handler"""
 
     class HTTPRequestHandler(BaseHTTPRequestHandler):
-        def do_GET(self) -> None:  # pylint: disable=invalid-name
+        def do_GET(self) -> None:
             """GET handler"""
             filename = None
             expand = False

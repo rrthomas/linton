@@ -1,20 +1,20 @@
-"""
-Linton tests utility routines.
+"""Linton tests utility routines.
+
 Copyright (c) Reuben Thomas 2023.
 Released under the GPL version 3, or (at your option) any later version.
 """
 
 import contextlib
-import io
-import sys
-import re
 import filecmp
+import io
+import re
 import shutil
+import sys
 import tempfile
-from pathlib import Path
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Callable, Optional
 from unittest.mock import patch
-from typing import Any, Callable, List, Optional
 
 import pytest
 from pytest import CaptureFixture, mark, param
@@ -23,7 +23,7 @@ from pytest import CaptureFixture, mark, param
 @dataclass
 class Case:
     name: str
-    args: List[str]
+    args: list[str]
     error: Optional[int] = None
 
 
@@ -36,7 +36,7 @@ def dirs_equal(a: Path, b: Path) -> bool:
 
 
 def dir_test(
-    function: Callable[[List[str]], None],
+    function: Callable[[list[str]], None],
     case: Case,
     fixture_dir: Path,
     capsys: CaptureFixture[str],
@@ -67,7 +67,7 @@ def dir_test(
             with open(expected_stderr, "w", encoding="utf-8") as f:
                 f.write(capsys.readouterr().err)
         else:
-            assert capsys.readouterr().err == open(expected_stderr, "r", encoding="utf-8").read() # pylint: disable=consider-using-with
+            assert capsys.readouterr().err == open(expected_stderr, encoding="utf-8").read()
 
 
 def make_tests(

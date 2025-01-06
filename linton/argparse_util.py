@@ -1,5 +1,5 @@
-"""
-Linton argparse utilities
+"""Linton argparse utilities
+
 © Reuben Thomas <rrt@sc3d.org> 2024
 Released under the GPL version 3, or (at your option) any later version.
 """

@@ -1,21 +1,20 @@
 # © Reuben Thomas <rrt@sc3d.org> 2024
 # Released under the GPL version 3, or (at your option) any later version.
 
+import argparse
 import importlib.metadata
 import os
 import sys
-import argparse
 import warnings
-from typing import List
 
+from .subcommand import init, publish, serve
 from .warnings_util import simple_warning
-from .subcommand import publish, serve, init
 
 
 VERSION = importlib.metadata.version("linton")
 
 
-def main(argv: List[str] = sys.argv[1:]) -> None:
+def main(argv: list[str] = sys.argv[1:]) -> None:
     # Command-line arguments
     parser = argparse.ArgumentParser(
         description="Make a web site from Markdown files and other resources.",
