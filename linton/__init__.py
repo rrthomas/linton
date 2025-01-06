@@ -23,7 +23,7 @@ def main(argv: list[str] = sys.argv[1:]) -> None:
         "-V",
         "--version",
         action="version",
-        version=f"%(prog)s {VERSION} (22 Oct 2024) by Reuben Thomas <rrt@sc3d.org>",
+        version=f"%(prog)s {VERSION} by Reuben Thomas <rrt@sc3d.org>",
     )
     warnings.showwarning = simple_warning(parser.prog)
 
