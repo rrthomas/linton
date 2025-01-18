@@ -39,10 +39,6 @@ packages = [
 [tool.setuptools.package-data]
 linton = ["init-pages/**"]
 
-[tool.mypy]
-exclude = ['^dist', '^build', '^linton/init-pages', '^tests/test-files']
-strict = true
-
 [tool.ruff.lint]
 select = ["D", "E", "F", "I", "UP"]
 ignore = ["D1", "D401", "D415", "E501"]
