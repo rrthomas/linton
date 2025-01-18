@@ -7,7 +7,7 @@ Released under the GPL version 3, or (at your option) any later version.
 import argparse
 import os
 import subprocess
-import urllib
+import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from xdg import Mime
