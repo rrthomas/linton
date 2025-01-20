@@ -15,7 +15,7 @@ code should be easy to understand; it is also designed to work for a long
 time, with only a few carefully chosen dependencies outside the core Python
 system.
 
-Linton is released under the GNU General Public License version 3, or (at
-your option) any later version. There is no warranty.
+Linton is free software, licensed under the GNU General Public License
+version 3, or (at your option) any later version. See the file COPYING.
 
 See https://rrthomas.github.io/linton for more information.
