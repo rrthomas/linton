@@ -30,7 +30,7 @@ def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
     subprocess.check_output(["nancy", args.document_root, args.output], env=render_env)
 
 
-def add_subparser(subparsers: argparse._SubParsersAction) -> None:  # type: ignore[type-arg]
+def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
         "publish",
         help="convert a directory of Markdown files and other resources into a web site.",

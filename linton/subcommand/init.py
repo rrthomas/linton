@@ -29,7 +29,7 @@ def run(args: argparse.Namespace, _render_env: dict[str, str]) -> None:
         )
 
 
-def add_subparser(subparsers: argparse._SubParsersAction) -> None:  # type: ignore[type-arg]
+def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
         "init",
         help="create a new Linton project",

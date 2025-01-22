@@ -67,7 +67,7 @@ def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
     httpd.serve_forever()
 
 
-def add_subparser(subparsers: argparse._SubParsersAction) -> None:  # type: ignore[type-arg]
+def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
         "serve",
         help="serve a Linton web site locally on your computer, for testing",
