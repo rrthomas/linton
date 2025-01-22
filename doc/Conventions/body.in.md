@@ -18,6 +18,6 @@ When referring to a page or other resource using a site-relative URL, use the he
 
 ## Page names including reserved characters
 
-Note that links to Linton pages whose names contain certain characters must be [percent-encoded](https://en.wikipedia.org/wiki/Percent-encoding), so that characters with special significance to web servers, such as question mark, are not treated as special. (Deliberately using these characters with their special meaning is fine!)
+Note that links to Linton pages whose names contain “[reserved characters](https://en.wikipedia.org/wiki/Percent-encoding#Reserved_characters)” must be [percent-encoded](https://en.wikipedia.org/wiki/Percent-encoding), so that characters with special significance to web servers, such as question mark, are not treated as special. (Deliberately using these characters with their special meaning is fine!)
 
 It is also safer to add a trailing slash to links to Linton pages, as otherwise some web servers still seem to misinterpret them. For example, link to a page called “Why?” with the relative URL `Why%3F/`, rather than just `Why%3F`.
