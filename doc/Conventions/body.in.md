@@ -14,7 +14,7 @@ For details of how the page is structured internally, see [Template](../Template
 
 To make Linton sites work offline (that is, when browsed as a simple collection of files), links to pages within a site should always end in `/index.html`. `linton serve` enforces this convention.
 
-When referring to a page or other resource using a site-relative URL, use the helper script `path-to-root.in.py`. For example, when referring to the page `/foo/bar/index.html`, write the URL as `$paste{path-to-root.in.py,$path}/foo/bar/index.html`. `path-to-root.in.py` generates a relative URL, which works regardless the of the site’s base URL, and even offline.
+When referring to a page or other resource using a site-relative URL, use the helper script `path-to-root.in.py`. For example, when referring to the page `/foo/bar/index.html`, write the URL as `\$paste{path-to-root.in.py,$path}/foo/bar/index.html`. `path-to-root.in.py` generates a relative URL, which works regardless the of the site’s base URL, and even offline.
 
 ## Page names including reserved characters
 
