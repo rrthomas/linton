@@ -1,4 +1,4 @@
-# © Reuben Thomas <rrt@sc3d.org> 2024
+# © Reuben Thomas <rrt@sc3d.org> 2024-2025
 # Released under the GPL version 3, or (at your option) any later version.
 
 import argparse
@@ -25,7 +25,7 @@ def main(argv: list[str] = sys.argv[1:]) -> None:
         "--version",
         action="version",
         version=f"""%(prog)s {VERSION}
-© 2024 Reuben Thomas <rrt@sc3d.org>
+© 2024-2025 Reuben Thomas <rrt@sc3d.org>
 https://github.com/rrthomas/linton
 Distributed under the GNU General Public License version 3, or (at
 your option) any later version. There is no warranty.""",

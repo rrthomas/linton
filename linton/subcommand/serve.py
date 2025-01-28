@@ -1,6 +1,6 @@
 """Linton 'serve' subcommand
 
-© Reuben Thomas <rrt@sc3d.org> 2024
+© Reuben Thomas <rrt@sc3d.org> 2024-2025
 Released under the GPL version 3, or (at your option) any later version.
 """
 
@@ -61,7 +61,7 @@ def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
                 self.wfile.write(output)
 
     render_env["LINTON_DOCUMENT_ROOT"] = args.document_root
-    httpd = HTTPServer(("localhost", 0), HTTPRequestHandler)
+    httpd = HTTPServer(("localhost", args.port), HTTPRequestHandler)
     [host, port] = httpd.server_address
     print(f"Connect to server at http://{str(host)}:{port}/index.html")
     httpd.serve_forever()
@@ -71,6 +71,12 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
         "serve",
         help="serve a Linton web site locally on your computer, for testing",
+    )
+    parser.add_argument(
+        "--port",
+        help="port on which to listen [default: random]",
+        type=int,
+        default=0,
     )
     add_subcommand_arguments(parser)
     parser.set_defaults(func=run)
