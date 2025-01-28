@@ -6,6 +6,7 @@
 
 import os.path
 import sys
+import urllib.parse
 
 
 # Get command-line arguments
@@ -22,8 +23,9 @@ desc = os.path.basename(parents)
 tree = ""
 classes = "breadcrumb-item breadcrumb-active"
 while parents not in ("", ".", "/"):
+    quoted_parents = urllib.parse.quote(parents)
     tree = f'<li class="{classes}">' + \
-        f'<a href="$include{{path-to-root.in.py,$path}}/{parents}/index.html">{desc}</a>' + \
+        f'<a href="$include{{path-to-root.in.py,$path}}/{quoted_parents}/index.html">{desc}</a>' + \
         f'</li>{tree}'
     classes = "breadcrumb-item"
     parents = os.path.dirname(parents)
