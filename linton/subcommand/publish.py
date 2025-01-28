@@ -33,7 +33,7 @@ def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
 def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
         "publish",
-        help="convert a directory of Markdown files and other resources into a web site.",
+        help="convert a directory of Markdown files and other resources into a web site",
         epilog="The output DIRECTORY cannot be a subdirectory of the source directory.",
     )
     parser.add_argument(
