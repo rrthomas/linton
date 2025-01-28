@@ -1,6 +1,6 @@
 # Installation
 
-To install Linton you’ll need Python and the [Nancy](https://github.com/rrthomas/nancy) utility.
+To install Linton you’ll need Python and the [Discount](https://www.pell.portland.or.us/~orc/Code/discount/) markdown processor.
 
 Then run the following command:
 
