@@ -36,7 +36,7 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
         epilog="The output DIRECTORY cannot be a subdirectory of the source directory.",
     )
     parser.add_argument(
-        "--force",
+        "-f", "--force",
         action="store_true",
         help="overwrite output directory even if it is not empty",
     )
