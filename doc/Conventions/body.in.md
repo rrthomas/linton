@@ -1,4 +1,4 @@
-# Writing web pages for Linton
+# Conventions for writing web pages
 
 Linton has some particular conventions for writing web pages that are mostly chosen either to work well with Nancy, to keep Linton itself simple, or to enable Linton web sites to work well both when served from a proper web server, and when run using the test `linton serve` web server.
 
