@@ -8,8 +8,8 @@ The layout of the generated HTML pages can be customized by editing `template.in
     The name of the web site's owner.
 =`Email.in.txt`=
     The email address of the web site's owner.
-=`favicon.ico`=
-    The web site icon, which is often shown by browsers in tab or window headings, or in bookmarks.
+=`favicon.png`=
+    The web site icon, which is often shown by browsers in tab or window headings, or in bookmarks, as well as at the top left of web pages.
 
 ## The page template
 
