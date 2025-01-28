@@ -23,13 +23,13 @@ tree = ""
 classes = "breadcrumb-item breadcrumb-active"
 while parents not in ("", ".", "/"):
     tree = f'<li class="{classes}">' + \
-        f'<a href="$include{{path-to-root.in.py,$path}}{parents}">{desc}</a>' + \
+        f'<a href="$include{{path-to-root.in.py,$path}}/{parents}/index.html">{desc}</a>' + \
         f'</li>{tree}'
     classes = "breadcrumb-item"
     parents = os.path.dirname(parents)
     desc = os.path.basename(parents)
 print(
     '<li class="breadcrumb-item">' + \
-    '<a href="$include{path-to-root.in.py,$path}">$include{Title.in.txt}</a>' + \
+    '<a href="$include{path-to-root.in.py,$path}/index.html">$include{Title.in.txt}</a>' + \
     f'</li>{tree}'
 )
