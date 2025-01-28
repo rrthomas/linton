@@ -12,8 +12,6 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from xdg import Mime
 
-from linton.argparse_util import add_subcommand_arguments
-
 
 def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
     """'serve' command handler"""
@@ -78,5 +76,11 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
         type=int,
         default=0,
     )
-    add_subcommand_arguments(parser)
+    parser.add_argument(
+        "document_root",
+        metavar="DIRECTORY",
+        help="directory containing source files [default: current working directory]",
+        default=os.getcwd(),
+        nargs="?",
+    )
     parser.set_defaults(func=run)

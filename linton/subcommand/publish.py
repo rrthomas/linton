@@ -1,6 +1,6 @@
 """Linton 'publish' subcommand
 
-© Reuben Thomas <rrt@sc3d.org> 2024
+© Reuben Thomas <rrt@sc3d.org> 2024-2025
 Released under the GPL version 3, or (at your option) any later version.
 """
 
@@ -9,7 +9,6 @@ import os
 import shutil
 import subprocess
 
-from linton.argparse_util import add_subcommand_arguments
 from linton.warnings_util import die
 
 
@@ -47,6 +46,8 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
         help="base URL of web site relative to root of server [default: %(default)s]",
         default="/",
     )
-    add_subcommand_arguments(parser)
+    parser.add_argument(
+        "document_root", metavar="DIRECTORY", help="directory containing source files"
+    )
     parser.add_argument("output", metavar="DIRECTORY", help="output directory")
     parser.set_defaults(func=run)
