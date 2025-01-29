@@ -44,7 +44,7 @@ jobs:
           # Prepend user bin directory to PATH
           echo $(python -c "import os; import sysconfig; print(sysconfig.get_path('scripts', f'{os.name}_user'))") >> $GITHUB_PATH
           linton publish --base-url /linton/ ./doc ./_site
-          linton serve --port $TEST_PORT ./doc & linkchecker http://localhost:$TEST_PORT
+          linton serve --port $TEST_PORT ./doc & linkchecker http://localhost:$TEST_PORT/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
