@@ -58,7 +58,6 @@ def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
                 self.end_headers()
                 self.wfile.write(output)
 
-    render_env["LINTON_DOCUMENT_ROOT"] = args.document_root
     httpd = HTTPServer(("localhost", args.port), HTTPRequestHandler)
     [host, port] = httpd.server_address
     print(f"Connect to server at http://{str(host)}:{port}/index.html")

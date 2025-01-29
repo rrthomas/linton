@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 
+# /// script
+# requires-python = ">=3.9"
+# ///
+
 import os.path
 import sys
+import urllib.parse
 
 
 # Get command-line arguments
@@ -18,16 +23,15 @@ desc = os.path.basename(parents)
 tree = ""
 classes = "breadcrumb-item breadcrumb-active"
 while parents not in ("", ".", "/"):
-    tree = (
-        f'<li class="{classes}">'
-        + f'<a href="$include{{path-to-root.in.py,$path}}{parents}">{desc}</a>'
-        + f"</li>{tree}"
-    )
+    quoted_parents = urllib.parse.quote(parents)
+    tree = f'<li class="{classes}">' + \
+        f'<a href="$include{{path-to-root.in.py,$path}}/{quoted_parents}/index.html">{desc}</a>' + \
+        f'</li>{tree}'
     classes = "breadcrumb-item"
     parents = os.path.dirname(parents)
     desc = os.path.basename(parents)
 print(
-    '<li class="breadcrumb-item">'
-    + '<a href="$include{path-to-root.in.py,$path}">$include{Title.in.txt}</a>'
-    + f"</li>{tree}"
+    '<li class="breadcrumb-item">' + \
+    '<a href="$include{path-to-root.in.py,$path}/index.html">$include{Title.in.txt}</a>' + \
+    f'</li>{tree}'
 )

@@ -14,8 +14,6 @@ from linton.warnings_util import die
 
 def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
     """'publish' command handler"""
-    render_env["LINTON_DOCUMENT_ROOT"] = args.document_root
-
     # Check output either does not exist, or is an empty directory, unless
     # --force given.
     if os.path.exists(args.output) and not (

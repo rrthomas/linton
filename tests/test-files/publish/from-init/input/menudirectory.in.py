@@ -3,6 +3,10 @@
 # © Reuben Thomas <rrt@sc3d.org> 2024
 # Released under the GPL version 3, or (at your option) any later version.
 
+# /// script
+# requires-python = ">=3.9"
+# ///
+
 import os
 import sys
 import urllib.parse
@@ -22,7 +26,7 @@ def make_directory(
     dirs = ""
     for entry in sorted(entries):
         quoted_entry = urllib.parse.quote(entry)
-        link = f'<a href="$include{{path-to-root.in.py,$path}}/{url}{quoted_entry}/">{entry}</a>'
+        link = f'<a href="$include{{path-to-root.in.py,$path}}/{url}{quoted_entry}/index.html">{entry}</a>'
         entry_path = os.path.join(path, entry)
         add_directory = False
         for subentry in os.listdir(entry_path):
@@ -43,20 +47,18 @@ def maybe_argv(n: int) -> Optional[str]:
 
 
 page = sys.argv[1]
-directory = maybe_argv(2) or os.path.dirname(page)
-link_classes = maybe_argv(3) or "nav-link"
-dir_link_classes = maybe_argv(4) or "nav-link nav-directory"
-
-# Get globals from environment variables
-DocumentRoot = os.environ["LINTON_DOCUMENT_ROOT"]
+realpath = sys.argv[2]
+directory = maybe_argv(3) or os.path.dirname(page)
+link_classes = maybe_argv(4) or "nav-link"
+dir_link_classes = maybe_argv(5) or "nav-link nav-directory"
 
 path = os.path.dirname(directory)
 if path == "./":
     path = ""
-directory = os.path.join(DocumentRoot, path)
 url = urllib.parse.quote(path)
 if url != "":
     url += "/"
+print(os.path.dirname(realpath), file=sys.stderr)
 print(
-    make_directory(directory, url, link_classes, dir_link_classes)
+    make_directory(os.path.dirname(realpath), url, link_classes, dir_link_classes)
 )

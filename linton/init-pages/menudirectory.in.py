@@ -47,20 +47,22 @@ def maybe_argv(n: int) -> Optional[str]:
 
 
 page = sys.argv[1]
-directory = maybe_argv(2) or os.path.dirname(page)
-link_classes = maybe_argv(3) or "nav-link"
-dir_link_classes = maybe_argv(4) or "nav-link nav-directory"
-
-# Get globals from environment variables
-DocumentRoot = os.environ["LINTON_DOCUMENT_ROOT"]
+realpath = sys.argv[2]
+directory = maybe_argv(3) or os.path.dirname(page)
+link_classes = maybe_argv(4) or "nav-link"
+dir_link_classes = maybe_argv(5) or "nav-link nav-directory"
 
 path = os.path.dirname(directory)
 if path == "./":
     path = ""
-directory = os.path.join(DocumentRoot, path)
+if directory == "":
+    parent_directory = os.path.dirname(realpath)
+else:
+    parent_directory = os.path.dirname(os.path.dirname(realpath))
+
 url = urllib.parse.quote(path)
 if url != "":
     url += "/"
 print(
-    make_directory(directory, url, link_classes, dir_link_classes)
+    make_directory(parent_directory, url, link_classes, dir_link_classes)
 )
