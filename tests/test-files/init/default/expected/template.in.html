@@ -53,7 +53,7 @@
     <div class="mt-1 container main-content center">
       $include{markdown-to-html.in.py,$include{dirname,$realpath}/body.in.md}
       <hr>
-      <small><em>Last updated $include{lastmodified.in.py,$realpath}</em></small>
+      <small><em>Last updated $include{lastmodified.in.py,$include{dirname,$realpath}/body.in.md}</em></small>
     </div>
   </main>
 
