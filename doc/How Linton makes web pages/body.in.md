@@ -14,4 +14,9 @@ Now, we will outline how Linton builds web pages, and explain some conventions t
     + Files whose names contain the suffix `.in` are not copied to the final web site (they are only used for *in*put).
     + Files whose names contain the suffix `.nancy`, usually either HTML or Markdown files, are sent to Nancy for macro expansion. The result is written to the output with the `.nancy` suffix removed: for example, `index.nancy.html` expands to a file called `index.html`.
 
+The use of Nancy enables two main types of functionality:
+
++ Page elements can be customized at any level of the site. For example, the file `Author.in.txt` contains the name of the site’s author or administrator. To change it for a particular page, a file of the same name can be placed in the page’s directory. To change it for a section of the site, put a file of that name in the top-level directory of that section.
++ Elements of the page can be automatically generated using custom scripts specific to the site template. Linton’s default template uses this functionality to make the navigation elements: the menu of related pages, and the breadcrumb trail.
+
 For more information about the page template, see [Template](../Template/index.html).
