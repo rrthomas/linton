@@ -2,7 +2,7 @@
 
 Linton delegates the actual work of making web pages to two other tools:
 
-+ A Markdown to HTML converter. You can use whichever one you like; by default, Linton is configured to use [Discount](http://www.pell.portland.or.us/~orc/Code/discount/). If you want to use a different program, edit `markdown-to-html.in.py` in the your web site’s source directory. The script must produce an HTML fragment (that is, some HTML that can be inserted into a `<body>` element) on standard output, given a filename on the command line.
++ A Markdown to HTML converter. You can use whichever one you like; by default, Linton is configured to use [Discount](http://www.pell.portland.or.us/~orc/Code/discount/). If you want to use a different program, edit `markdown-to-html.in.py` in the your web site’s input directory. The script must produce an HTML fragment (that is, some HTML that can be inserted into a `<body>` element) on standard output, given a filename on the command line.
 + The Nancy macro expander. See its [documentation](https://github.com/rrthomas/nancy) and in particular its [Cookbook](https://github.com/rrthomas/nancy/blob/main/Cookbook.md) for full details of how it works.
 
 Now, we will outline how Linton builds web pages, and explain some conventions that it uses.
