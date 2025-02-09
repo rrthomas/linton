@@ -6,7 +6,7 @@ import importlib.metadata
 import sys
 import warnings
 
-from .subcommand import init, publish, serve
+from .subcommand import check, init, publish, serve
 from .warnings_util import simple_warning
 
 
@@ -36,6 +36,7 @@ your option) any later version. There is no warranty.""",
     )
     publish.add_subparser(subparsers)
     serve.add_subparser(subparsers)
+    check.add_subparser(subparsers)
     init.add_subparser(subparsers)
 
     args = parser.parse_args(argv)

@@ -1,33 +1,33 @@
-"""Linton 'serve' subcommand
+"""Linton 'check' subcommand
 
-© Reuben Thomas <rrt@sc3d.org> 2024-2025
+© Reuben Thomas <rrt@sc3d.org> 2025
 Released under the GPL version 3, or (at your option) any later version.
 """
 
 import argparse
 import os
+import subprocess
+from multiprocessing import Process
 
 from ..server import new_server
 
 
 def run(args: argparse.Namespace) -> None:
-    """'serve' command handler"""
-    with new_server(args.port, args.base_url, args.document_root) as httpd:
+    """'check' command handler"""
+    with new_server(0, args.base_url, args.document_root) as httpd:
+        def run_server():
+            httpd.serve_forever()
+        p = Process(target=run_server)
+        p.start()
         [host, port] = httpd.server_address
-        print(f"Connect to server at http://{str(host)}:{port}/index.html")
-        httpd.serve_forever()
+        subprocess.check_call(["linkchecker", f"http://{host}:{port}/index.html"])
+        p.terminate()
 
 
 def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
-        "serve",
-        help="serve a Linton web site locally on your computer, for testing",
-    )
-    parser.add_argument(
-        "--port",
-        help="port on which to listen [default: random]",
-        type=int,
-        default=0,
+        "check",
+        help="check the internal hyperlinks of a Linton web site",
     )
     parser.add_argument(
         "document_root",
