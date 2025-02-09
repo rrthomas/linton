@@ -26,6 +26,9 @@ def run(args: argparse.Namespace) -> None:
     # Render the project files to the output
     subprocess.check_output(["nancy", args.document_root, args.output])
 
+    if not args.no_check_links:
+        subprocess.check_call(["linkchecker", args.output])
+
 
 def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
@@ -43,6 +46,11 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
         metavar="URL",
         help="base URL of web site relative to root of server [default: %(default)s]",
         default="/",
+    )
+    parser.add_argument(
+        "--no-check-links",
+        action="store_true",
+        help="don't check hyperlinks in the generated site",
     )
     parser.add_argument(
         "document_root", metavar="DIRECTORY", help="directory containing source files"
