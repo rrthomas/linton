@@ -55,10 +55,14 @@ dir_link_classes = maybe_argv(5) or "nav-link nav-directory"
 path = os.path.dirname(directory)
 if path == "./":
     path = ""
+if directory == "":
+    parent_directory = os.path.dirname(realpath)
+else:
+    parent_directory = os.path.dirname(os.path.dirname(realpath))
+
 url = urllib.parse.quote(path)
 if url != "":
     url += "/"
-print(os.path.dirname(realpath), file=sys.stderr)
 print(
-    make_directory(os.path.dirname(realpath), url, link_classes, dir_link_classes)
+    make_directory(parent_directory, url, link_classes, dir_link_classes)
 )
