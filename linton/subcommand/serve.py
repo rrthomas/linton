@@ -13,7 +13,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from xdg import Mime
 
 
-def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
+def run(args: argparse.Namespace) -> None:
     """'serve' command handler"""
 
     class HTTPRequestHandler(BaseHTTPRequestHandler):
@@ -48,7 +48,6 @@ def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
                 if expand:
                     output = subprocess.check_output(
                         ["nancy", args.document_root, "-", f"--path={url_path}"],
-                        env=render_env,
                     )
                 else:
                     with open(filename, "rb") as fh:

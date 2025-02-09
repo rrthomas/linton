@@ -3,7 +3,6 @@
 
 import argparse
 import importlib.metadata
-import os
 import sys
 import warnings
 
@@ -43,4 +42,4 @@ your option) any later version. There is no warranty.""",
     if "base_url" not in args:
         args.base_url = "/"
 
-    args.func(args, dict(os.environ))
+    args.func(args)

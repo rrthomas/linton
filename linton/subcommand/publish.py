@@ -12,7 +12,7 @@ import subprocess
 from linton.warnings_util import die
 
 
-def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
+def run(args: argparse.Namespace) -> None:
     """'publish' command handler"""
     # Check output either does not exist, or is an empty directory, unless
     # --force given.
@@ -24,7 +24,7 @@ def run(args: argparse.Namespace, render_env: dict[str, str]) -> None:
         shutil.rmtree(args.output)
 
     # Render the project files to the output
-    subprocess.check_output(["nancy", args.document_root, args.output], env=render_env)
+    subprocess.check_output(["nancy", args.document_root, args.output])
 
 
 def add_subparser(subparsers: argparse._SubParsersAction) -> None:
