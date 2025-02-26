@@ -9,6 +9,7 @@ import os
 import subprocess
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 
 from xdg import Mime
 
@@ -27,14 +28,14 @@ def run(args: argparse.Namespace) -> None:
             input_path = os.path.join(args.document_root, url_path)
             if os.path.isfile(input_path):
                 filename = input_path
-            elif os.path.basename(input_path) == "index.html":
-                # If an 'index.html' is not found but it has a Nancy source file, use it.
+            elif Path(input_path).suffix == ".html":
+                # If a '.html' is not found but it has a Nancy source file, use it.
                 nancy_source = (
-                    input_path.removesuffix("index.html") + "index.nancy.html"
+                    input_path.removesuffix(".html") + ".nancy.html"
                 )
                 if os.path.exists(nancy_source):
                     filename = nancy_source
-                    url_path = url_path.removesuffix("index.html") + "index.nancy.html"
+                    url_path = url_path.removesuffix(".html") + ".nancy.html"
                     expand = True
             if filename is None:
                 self.send_response(404)
