@@ -3,11 +3,13 @@
 
 import argparse
 import importlib.metadata
+import logging
+import os
 import sys
 import warnings
 
 from .subcommand import init, publish, serve
-from .warnings_util import simple_warning
+from .warnings_util import die, simple_warning
 
 
 VERSION = importlib.metadata.version("linton")
@@ -42,4 +44,12 @@ your option) any later version. There is no warranty.""",
     if "base_url" not in args:
         args.base_url = "/"
 
-    args.func(args)
+    # Expand input
+    try:
+        args.func(args)
+    except Exception as err:
+        if "DEBUG" in os.environ:
+            logging.error(err, exc_info=True)
+        else:
+            die(f"{err}")
+        sys.exit(1)
