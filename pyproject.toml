@@ -12,7 +12,7 @@ requires-python = ">= 3.9"
 dependencies = [
     "importlib_resources >= 5.10",
     "linkchecker",
-    "nancy",
+    "nancy >= 9.0.0",
     "pyxdg",
 ]
 classifiers = [
