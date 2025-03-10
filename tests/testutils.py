@@ -32,7 +32,11 @@ def dirs_equal(a: Path, b: Path) -> bool:
     stdout = io.StringIO()
     with contextlib.redirect_stdout(stdout):
         filecmp.dircmp(a, b).report_full_closure()
-    return re.search("Differing files|Only in", stdout.getvalue()) is None
+    match = re.search("Differing files|Only in", stdout.getvalue())
+    if match is None:
+        return True
+    print(stdout.getvalue())
+    return False
 
 
 def dir_test(
@@ -44,9 +48,7 @@ def dir_test(
 ) -> None:
     subcommand_name = case.args[0]
     expected_dir = fixture_dir / subcommand_name / case.name / "expected"
-    expected_stderr = (
-        fixture_dir / subcommand_name / case.name / "expected-stderr.txt"
-    )
+    expected_stderr = fixture_dir / subcommand_name / case.name / "expected-stderr.txt"
     patched_argv = [subcommand_name, *(sys.argv[1:])]
     # FIXME: when we can assume Python ≥ 3.12, use
     # `TemporaryDirectory(delete="DEBUG" not in os.environ)`
@@ -69,7 +71,10 @@ def dir_test(
             with open(expected_stderr, "w", encoding="utf-8") as f:
                 f.write(capsys.readouterr().err)
         else:
-            assert capsys.readouterr().err == open(expected_stderr, encoding="utf-8").read()
+            assert (
+                capsys.readouterr().err
+                == open(expected_stderr, encoding="utf-8").read()
+            )
 
 
 def make_tests(
@@ -84,9 +89,6 @@ def make_tests(
         test_cases.append(t)
     return mark.parametrize(
         "function,case,fixture_dir",
-        [
-            param(function, case, fixture_dir)
-            for case in test_cases
-        ],
+        [param(function, case, fixture_dir) for case in test_cases],
         ids=ids,
     )
