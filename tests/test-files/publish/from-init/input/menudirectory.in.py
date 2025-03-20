@@ -26,7 +26,7 @@ def make_directory(
     dirs = ""
     for entry in sorted(entries):
         quoted_entry = urllib.parse.quote(entry)
-        link = f'<a href="$include(path-to-root.in.py,$path)/{url}{quoted_entry}/index.html">{entry}</a>'
+        link = f'<a href="$run(path-to-root.in.py,$path)/{url}{quoted_entry}/index.html">{entry}</a>'
         entry_path = os.path.join(path, entry)
         add_directory = False
         for subentry in os.listdir(entry_path):

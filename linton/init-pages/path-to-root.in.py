@@ -18,4 +18,4 @@ path_to_root = re.sub("[^ ./][^/]*", "..", directory)
 if path_to_root == "":
     path_to_root = "."
 
-print(path_to_root)
+print(path_to_root, end="")

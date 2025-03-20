@@ -13,4 +13,4 @@ page = sys.argv[1]
 
 pagename = os.path.dirname(page)
 if pagename != "":
-    print(f": {pagename}")
+    print(f": {pagename}", end='')
