@@ -1,6 +1,6 @@
 [project]
 name = "linton"
-version = "1.3.2"
+version = "1.4.0"
 description = "Simple standalone static web site builder using Markdown"
 license = {text = "GPL v3 or later"}
 authors = [
