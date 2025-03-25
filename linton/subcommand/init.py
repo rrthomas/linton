@@ -15,8 +15,8 @@ from linton.warnings_util import die
 
 def run(args: argparse.Namespace) -> None:
     """'init' command handler"""
-    # Check directory does not exist.
-    if os.path.exists(args.directory):
+    # Check directory does not exist, unless we used --force
+    if not args.force and os.path.exists(args.directory):
         die(f"output {args.directory} already exists")
 
     # Copy the demo files to the new project
@@ -26,6 +26,7 @@ def run(args: argparse.Namespace) -> None:
             args.directory,
             # See https://github.com/rrthomas/linton/issues/7
             ignore=shutil.ignore_patterns("__pycache__"),
+            dirs_exist_ok=args.force,
         )
 
 
@@ -33,6 +34,11 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
         "init",
         help="create a new Linton project",
+    )
+    parser.add_argument(
+        "--force",
+        help="overwrite existing files and directories",
+        action="store_true",
     )
     parser.add_argument("directory", metavar="DIRECTORY", help="output directory")
     parser.set_defaults(func=run)
