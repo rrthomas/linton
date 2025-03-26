@@ -5,10 +5,9 @@
 # requires-python = ">=3.9"
 # ///
 
-import subprocess
 import sys
 
+import mistletoe
 
-subprocess.check_call(
-    ["markdown", "-f", "footnote,nopants,noalphalist,nostyle,fencedcode", *sys.argv[1:]]
-)
+
+print(mistletoe.markdown(sys.stdin))
