@@ -37,7 +37,7 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install dependencies
         run: |
-          sudo apt-get -y install discount python3-venv make linkchecker rsync
+          sudo apt-get -y install python3-venv make linkchecker rsync
           pip install --user .
       - name: Build pages and check links
         run: |

@@ -1,6 +1,6 @@
 # Installation
 
-To install Linton you’ll need Python and the [Discount](https://www.pell.portland.or.us/~orc/Code/discount/) markdown processor.
+To install Linton you’ll need Python.
 
 Then run the following command:
 
