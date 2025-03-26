@@ -25,17 +25,19 @@ def run(args: argparse.Namespace) -> None:
             url_path = urllib.parse.unquote(
                 urllib.parse.urlparse(self.path.removeprefix(args.base_url)).path
             )
-            input_path = os.path.join(args.document_root, url_path)
-            if os.path.isfile(input_path):
+            input_path = Path(args.document_root) / url_path
+            if input_path.is_file():
                 filename = input_path
-            elif Path(input_path).suffix == ".html":
-                # If a '.html' is not found but it has a Nancy source file, use it.
+            else:
+                # If a file is not found but it has a Nancy source file, use it.
+                suffix = input_path.suffix
+                nancy_suffix = f".nancy{suffix}"
                 nancy_source = (
-                    input_path.removesuffix(".html") + ".nancy.html"
+                    input_path.with_suffix(nancy_suffix)
                 )
                 if os.path.exists(nancy_source):
                     filename = nancy_source
-                    url_path = url_path.removesuffix(".html") + ".nancy.html"
+                    url_path = url_path.removesuffix(suffix) + nancy_suffix
                     expand = True
             if filename is None:
                 self.send_response(404)
