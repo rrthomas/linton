@@ -10,4 +10,4 @@ import sys
 import mistletoe
 
 
-print(mistletoe.markdown(sys.stdin))
+sys.stdout.write(mistletoe.markdown(sys.stdin))
