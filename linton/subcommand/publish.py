@@ -8,6 +8,7 @@ import argparse
 import os
 import shutil
 import subprocess
+import sys
 
 from linton.warnings_util import die
 
@@ -23,15 +24,20 @@ def run(args: argparse.Namespace) -> None:
             die(f"output {args.output} is not an empty directory")
         shutil.rmtree(args.output)
 
-    # Render the project files to the output
-    subprocess.check_output(["nancy", args.document_root, args.output])
+    try:
+        # Render the project files to the output
+        subprocess.check_output(["nancy", args.document_root, args.output])
 
-    # Check links unless disabled.
-    output_dir = args.output
-    if not output_dir.endswith("/"):
-        output_dir += "/"
-    if not args.no_check_links:
-        subprocess.check_call(["linkchecker", output_dir])
+        # Check links unless disabled.
+        output_dir = args.output
+        if not output_dir.endswith("/"):
+            output_dir += "/"
+        if not args.no_check_links:
+            subprocess.check_call(["linkchecker", output_dir])
+    except subprocess.CalledProcessError as err:
+        if err.stderr is not None:
+            print(err.stderr.decode("iso-8859-1"), file=sys.stderr)
+        die(f"Error code {err.returncode} running: {' '.join(map(str, err.cmd))}")
 
 
 def add_subparser(subparsers: argparse._SubParsersAction) -> None:
