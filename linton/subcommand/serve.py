@@ -32,9 +32,7 @@ def run(args: argparse.Namespace) -> None:
                 # If a file is not found but it has a Nancy source file, use it.
                 suffix = input_path.suffix
                 nancy_suffix = f".nancy{suffix}"
-                nancy_source = (
-                    input_path.with_suffix(nancy_suffix)
-                )
+                nancy_source = input_path.with_suffix(nancy_suffix)
                 if os.path.exists(nancy_source):
                     filename = nancy_source
                     url_path = url_path.removesuffix(suffix) + nancy_suffix
