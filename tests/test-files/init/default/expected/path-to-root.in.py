@@ -5,17 +5,17 @@
 # requires-python = ">=3.9"
 # ///
 
-import os
-import re
 import sys
+from pathlib import Path
 
 
 # Read command-line arguments
-page = sys.argv[1]
-directory = os.path.dirname(page)
+page = Path(sys.argv[1])
+directory = page.parent
 
-path_to_root = re.sub("[^ ./][^/]*", "..", directory)
-if path_to_root == "":
-    path_to_root = "."
+path_to_root = Path(".")
+while directory != Path("."):
+    directory = directory.parent
+    path_to_root /= ".."
 
-print(path_to_root, end="")
+print(str(path_to_root), end="")

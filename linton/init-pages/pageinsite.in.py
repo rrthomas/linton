@@ -4,13 +4,13 @@
 # requires-python = ">=3.9"
 # ///
 
-import os.path
 import sys
+from pathlib import Path
 
 
 # Get command-line arguments
-page = sys.argv[1]
+page = Path(sys.argv[1])
 
-pagename = os.path.dirname(page)
-if pagename != "":
-    print(f": {pagename}", end="")
+pagename = page.parent
+if pagename != Path("."):
+    print(f": {str(pagename)}", end="")
