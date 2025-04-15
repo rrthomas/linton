@@ -1,0 +1,14 @@
+self-url: $include(GlobalUrl.in.txt)/$run(output-url.in.py,$path)
+feed-description: All posts
+posts:
+-
+    path: Sample%20page/index.html
+    published: 2025-03-25T14:17:00Z
+    title: Sample page
+    summary: A sample page.
+-
+    path: Another%20sample%20page/index.html
+    published: 2025-04-15T17:43:00+01
+    title: Another sample page
+    summary: >
+        Another sample page.
