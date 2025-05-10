@@ -53,6 +53,8 @@ else:
     parent_directory = realpath.parent.parent
 
 url = urllib.parse.quote(str(path))
-if url != "":
+if url == ".":
+    url = ""
+else:
     url += "/"
 print(make_directory(parent_directory, url, link_classes, dir_link_classes))
