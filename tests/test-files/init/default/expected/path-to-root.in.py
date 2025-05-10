@@ -18,4 +18,4 @@ while directory != Path("."):
     directory = directory.parent
     path_to_root /= ".."
 
-print(str(path_to_root), end="")
+print(path_to_root, end="")
