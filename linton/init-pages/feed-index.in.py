@@ -56,7 +56,6 @@ base_url = urllib.parse.urlunsplit((scheme, netloc, directory, '', ''))
 
 posts = []
 
-
 for post in feed['posts']:
     assert_type(post, dict)
     assert_type(post['path'], str)
@@ -68,7 +67,7 @@ for post in feed['posts']:
     post_url = base_url + '/' + post['path']
     posts.append(Post(updated, post['title'], post['summary'], post_url))
 
-posts.sort()
+posts.sort(reverse=True)
 
 for post in posts:
     print(post.to_html())
