@@ -5,58 +5,113 @@ Released under the GPL version 3, or (at your option) any later version.
 """
 
 import argparse
+import glob
 import os
 import subprocess
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from xdg import Mime
+
+
+def denancify(name: Path) -> Path:
+    suffixes = name.suffixes
+    if len(suffixes) > 0 and ".nancy" in suffixes[-2:]:
+        suffixes.remove(".nancy")
+        while name.suffix:
+            name = name.with_suffix("")
+        return name.with_suffix("".join(suffixes))
+    return name
 
 
 def run(args: argparse.Namespace) -> None:
     """'serve' command handler"""
 
     class HTTPRequestHandler(BaseHTTPRequestHandler):
+        def serve_file(self, filename: Path, content: bytes) -> None:
+            mime_type = str(Mime.get_type2(filename).canonical())
+            self.send_response(200)
+            self.send_header("Content-Type", mime_type)
+            self.end_headers()
+            self.wfile.write(content)
+
+        def maybe_serve_file(
+            self, filename: Path, filenames: list[str], url_path: str
+        ) -> bool:
+            # First, try reading a plain file.
+            if filename.name in filenames:
+                with open(filename, "rb") as fh:
+                    output = fh.read()
+                self.serve_file(filename, output)
+                return True
+
+            # Next, look for a Nancy source file to expand.
+            suffix = filename.suffix
+            nancy_suffix = f".nancy{suffix}"
+            nancy_source = filename.with_suffix(nancy_suffix)
+            if nancy_source.name in filenames:
+                output = subprocess.check_output(
+                    [
+                        "nancy",
+                        args.document_root,
+                        "-",
+                        f"--path={Path(url_path).parent / nancy_source.name}",
+                    ],
+                )
+                self.serve_file(Path(nancy_source), output)
+                return True
+
+            return False
+
         def do_GET(self) -> None:
             """GET handler"""
-            filename = None
-            expand = False
             url_path = urllib.parse.unquote(
                 urllib.parse.urlparse(self.path.removeprefix(args.base_url)).path
             )
+
+            # First, try the literal file name and its templated version.
             input_path = Path(args.document_root) / url_path
-            if input_path.is_file():
-                filename = input_path
-            else:
-                # If a file is not found but it has a Nancy source file, use it.
-                suffix = input_path.suffix
-                nancy_suffix = f".nancy{suffix}"
-                nancy_source = input_path.with_suffix(nancy_suffix)
-                if os.path.exists(nancy_source):
-                    filename = nancy_source
-                    url_path = url_path.removesuffix(suffix) + nancy_suffix
-                    expand = True
-            if filename is None:
-                self.send_response(404)
-                self.send_header("Content-Type", "text/html")
-                self.end_headers()
-                self.wfile.write(
-                    b"<html><head><title>No such page</title><body>No such page</body></html>"
-                )
-            else:
-                mime_type = str(Mime.get_type2(filename).canonical())
-                if expand:
-                    output = subprocess.check_output(
-                        ["nancy", args.document_root, "-", f"--path={url_path}"],
+            if self.maybe_serve_file(
+                input_path, os.listdir(input_path.parent), url_path
+            ):
+                return
+
+            # If that doesn't work, find all files whose names containing
+            # commands in the same directory, and expand a file containing
+            # each of them to find its expanded name, in case one expands to
+            # the name we want.
+            with TemporaryDirectory() as tmpdir:
+                filename_file_url = Path(os.path.dirname(url_path)) / "filelist.nancy"
+                filename_file = Path(tmpdir) / filename_file_url
+                os.makedirs(filename_file.parent, exist_ok=True)
+                for filename in glob.glob(b"*$*", root_dir=bytes(input_path.parent)):
+                    with open(filename_file, "wb") as f:
+                        f.write(filename)
+                    output_file = subprocess.check_output(
+                        [
+                            "nancy",
+                            os.pathsep.join([args.document_root, tmpdir]),
+                            "-",
+                            f"--path={filename_file_url}",
+                        ],
                     )
-                else:
-                    with open(filename, "rb") as fh:
-                        output = fh.read()
-                self.send_response(200)
-                self.send_header("Content-Type", mime_type)
-                self.end_headers()
-                self.wfile.write(output)
+                    output_name = denancify(Path(output_file.decode("utf-8")))
+                    if input_path.name == str(output_name) and self.maybe_serve_file(
+                        input_path.parent / denancify(Path(filename.decode("utf-8"))),
+                        [os.fsdecode(filename)],
+                        url_path,
+                    ):
+                        return
+
+            # Otherwise, file is not found
+            self.send_response(404)
+            self.send_header("Content-Type", "text/html")
+            self.end_headers()
+            self.wfile.write(
+                b"<html><head><title>No such page</title><body>No such page</body></html>"
+            )
 
     httpd = HTTPServer(("localhost", args.port), HTTPRequestHandler)
     [host, port] = httpd.server_address
