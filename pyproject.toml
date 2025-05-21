@@ -12,7 +12,7 @@ requires-python = ">= 3.10"
 dependencies = [
     "importlib_resources >= 5.10",
     "linkchecker",
-    "nancy ~= 10.0",
+    "nancy ~= 11.0",
     "pyxdg",
     "mistletoe",
 ]
