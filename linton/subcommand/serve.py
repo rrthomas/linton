@@ -125,6 +125,7 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
         help="serve a Linton web site locally on your computer, for testing",
     )
     parser.add_argument(
+        "-p",
         "--port",
         help="port on which to listen [default: random]",
         type=int,
