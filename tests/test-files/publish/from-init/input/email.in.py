@@ -1,15 +1,10 @@
 #!/usr/bin/env python3
 
-# /// script
-# requires-python = ">=3.9"
-# ///
-
 import sys
-from typing import Optional
 
 
 # Read command-line arguments
-def maybe_argv(n: int) -> Optional[str]:
+def maybe_argv(n: int) -> str | None:
     return sys.argv[n] if len(sys.argv) > n else None
 
 

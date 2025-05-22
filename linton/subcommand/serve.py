@@ -12,7 +12,6 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Optional
 
 from xdg import Mime
 
@@ -68,7 +67,7 @@ def run(args: argparse.Namespace) -> None:
 
             return False
 
-        def run_command(self, cmd: list[str]) -> Optional[bytes]:
+        def run_command(self, cmd: list[str]) -> bytes | None:
             try:
                 res = subprocess.run(cmd, capture_output=True, check=True)
                 return res.stdout

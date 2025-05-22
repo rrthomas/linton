@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # Output the path from the first argument to the root of the directory
 
-# /// script
-# requires-python = ">=3.9"
-# ///
-
 import sys
 from pathlib import Path
 

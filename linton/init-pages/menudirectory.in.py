@@ -3,15 +3,10 @@
 # © Reuben Thomas <rrt@sc3d.org> 2024-2025
 # Released under the GPL version 3, or (at your option) any later version.
 
-# /// script
-# requires-python = ">=3.9"
-# ///
-
 import os
 import sys
 import urllib.parse
 from pathlib import Path
-from typing import Optional
 
 
 # Directory listing generator
@@ -35,12 +30,12 @@ def make_directory(
 
 
 # Read command-line arguments
-def maybe_argv(n: int) -> Optional[str]:
+def maybe_argv(n: int) -> str | None:
     return sys.argv[n] if len(sys.argv) > n else None
 
 
 page = Path(sys.argv[1])
-realpath = Path(os.environ['NANCY_INPUT']) / page
+realpath = Path(os.environ["NANCY_INPUT"]) / page
 directory_str = maybe_argv(2)
 directory = Path(directory_str) if directory_str is not None else page.parent
 link_classes = maybe_argv(3) or "nav-link"

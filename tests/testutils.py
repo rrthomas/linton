@@ -11,9 +11,10 @@ import re
 import shutil
 import sys
 import tempfile
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, Optional
+from typing import Any
 from unittest.mock import patch
 
 import pytest
@@ -24,7 +25,7 @@ from pytest import CaptureFixture, mark, param
 class Case:
     name: str
     args: list[str]
-    error: Optional[int] = None
+    error: int | None = None
 
 
 # See https://stackoverflow.com/questions/4187564
