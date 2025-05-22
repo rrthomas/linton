@@ -12,6 +12,7 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from typing import Optional
 
 from xdg import Mime
 
@@ -52,7 +53,7 @@ def run(args: argparse.Namespace) -> None:
             nancy_suffix = f".nancy{suffix}"
             nancy_source = filename.with_suffix(nancy_suffix)
             if nancy_source.name in filenames:
-                output = subprocess.check_output(
+                output = self.run_command(
                     [
                         "nancy",
                         args.document_root,
@@ -60,10 +61,26 @@ def run(args: argparse.Namespace) -> None:
                         f"--path={Path(url_path).parent / nancy_source.name}",
                     ],
                 )
+                if output is None:
+                    return True
                 self.serve_file(Path(nancy_source), output)
                 return True
 
             return False
+
+        def run_command(self, cmd: list[str]) -> Optional[bytes]:
+            try:
+                res = subprocess.run(cmd, capture_output=True, check=True)
+                return res.stdout
+            except subprocess.CalledProcessError as e:
+                self.send_response(500)
+                self.send_header("Content-Type", "text/html")
+                self.end_headers()
+                self.wfile.write(
+                    b"<html><head><title>Internal error</title><body><h1>Internal error</h1><pre>"
+                    + e.stderr
+                    + b"</pre></body></html>"
+                )
 
         def do_GET(self) -> None:
             """GET handler"""
@@ -89,7 +106,7 @@ def run(args: argparse.Namespace) -> None:
                 for filename in glob.glob(b"*$*", root_dir=bytes(input_path.parent)):
                     with open(filename_file, "wb") as f:
                         f.write(filename)
-                    output_file = subprocess.check_output(
+                    output_file = self.run_command(
                         [
                             "nancy",
                             os.pathsep.join([args.document_root, tmpdir]),
@@ -97,6 +114,8 @@ def run(args: argparse.Namespace) -> None:
                             f"--path={filename_file_url}",
                         ],
                     )
+                    if output_file is None:
+                        return
                     output_name = denancify(Path(output_file.decode("utf-8")))
                     if input_path.name == str(output_name) and self.maybe_serve_file(
                         input_path.parent / denancify(Path(filename.decode("utf-8"))),
