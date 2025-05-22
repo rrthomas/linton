@@ -6,7 +6,6 @@ Released under the GPL version 3, or (at your option) any later version.
 
 import argparse
 import os
-import shutil
 import subprocess
 import sys
 
@@ -15,20 +14,28 @@ from linton.warnings_util import die
 
 def run(args: argparse.Namespace) -> None:
     """'publish' command handler"""
+    cmd = ["nancy"]
+
+    # Deal with --update
+    if args.update:
+        args.force = True
+        cmd.append("--update")
+
     # Check output either does not exist, or is an empty directory, unless
-    # --force given.
+    # --force given
     if os.path.exists(args.output) and not (
         os.path.isdir(args.output) and len(os.listdir(args.output)) == 0
     ):
-        if not args.force:
-            die(f"output {args.output} is not an empty directory")
-        shutil.rmtree(args.output)
+        if args.force:
+            cmd.append("--delete")
+        else:
+            die(f"output {args.output} exists and is not an empty directory")
 
     try:
         # Render the project files to the output
-        subprocess.check_output(["nancy", args.document_root, args.output])
+        subprocess.check_output(cmd + [args.document_root, args.output])
 
-        # Check links unless disabled.
+        # Check links unless disabled
         output_dir = args.output
         if not output_dir.endswith("/"):
             output_dir += "/"
@@ -47,9 +54,16 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
         epilog="The output DIRECTORY cannot be a subdirectory of the input directory.",
     )
     parser.add_argument(
-        "-f", "--force",
+        "-f",
+        "--force",
         action="store_true",
         help="overwrite output directory even if it is not empty",
+    )
+    parser.add_argument(
+        "-u",
+        "--update",
+        action="store_true",
+        help="update an existing site, writing only changed files (implies --force)",
     )
     parser.add_argument(
         "--base-url",
