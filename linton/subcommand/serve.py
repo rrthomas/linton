@@ -138,7 +138,7 @@ def run(args: argparse.Namespace) -> None:
             )
 
     httpd = HTTPServer(("localhost", args.port), HTTPRequestHandler)
-    [host, port] = httpd.server_address
+    (host, port, *_) = httpd.server_address
     print(f"Connect to server at http://{str(host)}:{port}/index.html")
     httpd.serve_forever()
 
