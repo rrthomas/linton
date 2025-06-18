@@ -43,7 +43,9 @@ def run(args: argparse.Namespace) -> None:
             # If the name is a directory, try serving its "index.html"
             if filename.is_dir():
                 return self.maybe_serve_file(
-                    filename / "index.html", os.listdir(filename), url_path
+                    filename / "index.html",
+                    os.listdir(filename),
+                    f"{url_path}/index.html",
                 )
 
             # First, try reading a plain file.
