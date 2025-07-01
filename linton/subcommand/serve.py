@@ -43,7 +43,9 @@ def run(args: argparse.Namespace) -> None:
             # If the name is a directory, try serving its "index.html"
             if filename.is_dir():
                 self.send_response(301)
-                self.send_header("Location", f"{url_path}/index.html")
+                self.send_header(
+                    "Location", os.path.join(args.base_url, url_path, "index.html")
+                )
                 self.end_headers()
                 return True
 
