@@ -8,6 +8,12 @@ Then run the following command:
 pip install linton
 ```
 
+If you have `pipx`, you may prefer:
+
+```
+pipx install --include-deps linton
+```
+
 To create a new Linton web site, use:
 
 ```
