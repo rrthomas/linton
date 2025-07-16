@@ -12,6 +12,7 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from urllib.parse import quote
 
 from xdg import Mime
 
@@ -44,7 +45,8 @@ def run(args: argparse.Namespace) -> None:
             if filename.is_dir():
                 self.send_response(301)
                 self.send_header(
-                    "Location", os.path.join(args.base_url, url_path, "index.html")
+                    "Location",
+                    os.path.join(quote(args.base_url), quote(url_path), "index.html"),
                 )
                 self.end_headers()
                 return True
