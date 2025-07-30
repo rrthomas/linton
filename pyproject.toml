@@ -13,7 +13,6 @@ dependencies = [
     "importlib_resources >= 5.10",
     "linkchecker",
     "nancy ~= 11.0",
-    "pyxdg",
     "mistletoe",
 ]
 classifiers = [

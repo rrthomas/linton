@@ -10,11 +10,10 @@ import os
 import subprocess
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from mimetypes import guess_type
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from urllib.parse import quote
-
-from xdg import Mime
 
 
 def denancify(name: Path) -> Path:
@@ -32,7 +31,7 @@ def run(args: argparse.Namespace) -> None:
 
     class HTTPRequestHandler(BaseHTTPRequestHandler):
         def serve_file(self, filename: Path, content: bytes) -> None:
-            mime_type = str(Mime.get_type2(filename).canonical())
+            mime_type = guess_type(filename)[0] or "text/plain"
             self.send_response(200)
             self.send_header("Content-Type", mime_type)
             self.end_headers()
