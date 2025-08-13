@@ -5,10 +5,9 @@ Released under the GPL version 3, or (at your option) any later version.
 """
 
 import argparse
+import importlib.resources
 import os
 import shutil
-
-import importlib_resources
 
 from linton.warnings_util import die
 
@@ -20,7 +19,7 @@ def run(args: argparse.Namespace) -> None:
         die(f"output {args.directory} already exists")
 
     # Copy the demo files to the new project
-    with importlib_resources.as_file(importlib_resources.files()) as fspath:
+    with importlib.resources.as_file(importlib.resources.files()) as fspath:
         shutil.copytree(
             os.path.join(fspath, "..", "init-pages"),
             args.directory,
