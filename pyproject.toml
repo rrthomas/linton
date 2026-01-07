@@ -1,10 +1,10 @@
 [project]
 name = "linton"
-version = "1.7.6"
+version = "1.8.0"
 description = "Simple standalone static web site builder using Markdown"
 license = "GPL-3.0-or-later"
 authors = [
-    {name = "Reuben Thomas", email = "rrt@sc3d.org"}
+    {name = "Reuben Thomas", email = "rrt@sc3d.org"},
 ]
 readme = "README.md"
 urls = {Homepage = "https://github.com/rrthomas/linton"}
