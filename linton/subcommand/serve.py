@@ -1,6 +1,6 @@
 """Linton 'serve' subcommand
 
-© Reuben Thomas <rrt@sc3d.org> 2024-2025
+© Reuben Thomas <rrt@sc3d.org> 2024-2026
 Released under the GPL version 3, or (at your option) any later version.
 """
 
@@ -70,9 +70,8 @@ def run(args: argparse.Namespace) -> None:
                         f"--path={Path(url_path).parent / nancy_source.name}",
                     ],
                 )
-                if output is None:
-                    return True
-                self.serve_file(Path(nancy_source), output)
+                if output is not None:
+                    self.serve_file(Path(nancy_source), output)
                 return True
 
             return False
@@ -98,40 +97,50 @@ def run(args: argparse.Namespace) -> None:
             )
 
             # First, try the literal file name and its templated version.
-            input_path = Path(args.document_root) / url_path
-            if self.maybe_serve_file(
-                input_path, os.listdir(input_path.parent), url_path
-            ):
-                return
+            for input_dir in args.document_root.split(os.path.pathsep):
+                input_path = Path(input_dir) / url_path
+                if input_path.parent.exists() and self.maybe_serve_file(
+                    input_path, os.listdir(input_path.parent), url_path
+                ):
+                    return
 
             # If that doesn't work, find all files whose names containing
             # commands in the same directory, and expand a file containing
             # each of them to find its expanded name, in case one expands to
             # the name we want.
             with TemporaryDirectory() as tmpdir:
-                filename_file_url = Path(os.path.dirname(url_path)) / "filelist.nancy"
-                filename_file = Path(tmpdir) / filename_file_url
-                os.makedirs(filename_file.parent, exist_ok=True)
-                for filename in glob.glob(b"*$*", root_dir=bytes(input_path.parent)):
-                    with open(filename_file, "wb") as f:
-                        f.write(filename)
-                    output_file = self.run_command(
-                        [
-                            "nancy",
-                            os.pathsep.join([args.document_root, tmpdir]),
-                            "-",
-                            f"--path={filename_file_url}",
-                        ],
+                for input_dir in args.document_root.split(os.path.pathsep):
+                    input_path = Path(input_dir) / url_path
+                    filename_file_url = (
+                        Path(os.path.dirname(url_path)) / "filelist.nancy"
                     )
-                    if output_file is None:
-                        return
-                    output_name = denancify(Path(output_file.decode("utf-8")))
-                    if input_path.name == str(output_name) and self.maybe_serve_file(
-                        input_path.parent / denancify(Path(filename.decode("utf-8"))),
-                        [os.fsdecode(filename)],
-                        url_path,
+                    filename_file = Path(tmpdir) / filename_file_url
+                    os.makedirs(filename_file.parent, exist_ok=True)
+                    for filename in glob.glob(
+                        b"*$*", root_dir=bytes(input_path.parent)
                     ):
-                        return
+                        with open(filename_file, "wb") as f:
+                            f.write(filename)
+                        output_file = self.run_command(
+                            [
+                                "nancy",
+                                os.pathsep.join([args.document_root, tmpdir]),
+                                "-",
+                                f"--path={filename_file_url}",
+                            ],
+                        )
+                        if output_file is None:
+                            return
+                        output_name = denancify(Path(output_file.decode("utf-8")))
+                        if input_path.name == str(
+                            output_name
+                        ) and self.maybe_serve_file(
+                            input_path.parent
+                            / denancify(Path(filename.decode("utf-8"))),
+                            [os.fsdecode(filename)],
+                            url_path,
+                        ):
+                            return
 
             # Otherwise, file is not found
             self.send_response(404)
@@ -151,6 +160,8 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
         "serve",
         help="serve a Linton web site locally on your computer, for testing",
+        epilog=f"The input PATH is a '{os.path.pathsep}'-separated list; the inputs are merged "
+        + "in left-to-right order.",
     )
     parser.add_argument(
         "-p",
@@ -161,8 +172,8 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     )
     parser.add_argument(
         "document_root",
-        metavar="DIRECTORY",
-        help="directory containing source files [default: current working directory]",
+        metavar="PATH",
+        help="one or more input directories containing source files [default: current working directory]",
         default=os.getcwd(),
         nargs="?",
     )
