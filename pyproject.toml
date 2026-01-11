@@ -27,6 +27,7 @@ test = ["pytest"]
 
 [build-system]
 requires = [
+    "build",
     "setuptools",
 ]
 
