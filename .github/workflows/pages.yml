@@ -49,7 +49,7 @@ jobs:
           linton publish --base-url /linton/ ./doc ./_site
           linton serve --port $TEST_PORT ./doc & linkchecker http://localhost:$TEST_PORT/index.html
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
 
   # Deployment job
   deploy:
