@@ -34,7 +34,7 @@ jobs:
         with:
           fetch-depth: 0 # Get all commits for setting page timestamps
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
       - name: Install dependencies
         run: |
           sudo apt-get -y install python3-venv make linkchecker rsync
