@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# © Reuben Thomas <rrt@sc3d.org> 2024-2025
+# © Reuben Thomas <rrt@sc3d.org> 2024-2026
 # Released under the GPL version 3, or (at your option) any later version.
 
 import os
@@ -35,7 +35,7 @@ def maybe_argv(n: int) -> str | None:
 
 
 page = Path(sys.argv[1])
-realpath = Path(os.environ["NANCY_INPUT"]) / page
+realpath = Path(os.environ["NANCY_INPUT"])
 directory_str = maybe_argv(2)
 directory = Path(directory_str) if directory_str is not None else page.parent
 link_classes = maybe_argv(3) or "nav-link"

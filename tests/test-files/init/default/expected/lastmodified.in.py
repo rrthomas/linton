@@ -7,9 +7,8 @@ from pathlib import Path
 
 
 # Get command-line arguments
-page = Path(sys.argv[1])
-basename = sys.argv[2]
-file = Path(os.environ["NANCY_INPUT"]) / page.parent / basename
+basename = sys.argv[1]
+file = Path(os.environ["NANCY_INPUT"]).parent / basename
 
 time = os.stat(file).st_mtime
 dt = datetime.fromtimestamp(time)
