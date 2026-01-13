@@ -35,7 +35,7 @@ def maybe_argv(n: int) -> str | None:
 
 
 page = Path(sys.argv[1])
-realpath = Path(os.environ["NANCY_INPUT"])
+realpath = Path(os.environ["NANCY_INPUT"]) / page
 directory_str = maybe_argv(2)
 directory = Path(directory_str) if directory_str is not None else page.parent
 link_classes = maybe_argv(3) or "nav-link"

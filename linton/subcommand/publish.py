@@ -1,6 +1,6 @@
 """Linton 'publish' subcommand
 
-© Reuben Thomas <rrt@sc3d.org> 2024-2026
+© Reuben Thomas <rrt@sc3d.org> 2024-2025
 Released under the GPL version 3, or (at your option) any later version.
 """
 
@@ -51,9 +51,7 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
         "publish",
         help="convert a directory of Markdown files and other resources into a web site",
-        epilog="The output DIRECTORY cannot be a subdirectory of the input directory. "
-        + f"The input PATH is a '{os.path.pathsep}'-separated list; the inputs are merged "
-        + "in left-to-right order.",
+        epilog="The output DIRECTORY cannot be a subdirectory of the input directory.",
     )
     parser.add_argument(
         "-f",
@@ -79,9 +77,7 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
         help="don't check hyperlinks in the generated site",
     )
     parser.add_argument(
-        "document_root",
-        metavar="PATH",
-        help="one or more input directories containing source files",
+        "document_root", metavar="DIRECTORY", help="directory containing source files"
     )
     parser.add_argument("output", metavar="DIRECTORY", help="output directory")
     parser.set_defaults(func=run)
