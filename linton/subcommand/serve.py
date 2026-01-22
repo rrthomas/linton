@@ -104,32 +104,23 @@ def run(args: argparse.Namespace) -> None:
             ):
                 return
 
-            # If that doesn't work, find all files whose names contain
-            # commands in the same directory, and expand a file containing
-            # each of them to find its expanded name, in case one expands to
-            # the name we want.
-            with TemporaryDirectory() as tmpdir:
-                filename_file_url = Path(os.path.dirname(url_path)) / "filelist.nancy"
-                filename_file = Path(tmpdir) / filename_file_url
-                os.makedirs(filename_file.parent, exist_ok=True)
-                for filename in glob.glob(b"*$*", root_dir=bytes(input_path.parent)):
-                    with open(filename_file, "wb") as f:
-                        f.write(filename)
-                    output_file = self.run_command(
+            # Otherwise, if the directory containing the file has at least
+            # one file with a command in its name, expand the whole
+            # directory, in case one expands to the name we want.
+            if len(glob.glob(b"*$*", root_dir=bytes(input_path.parent))) > 0:
+                with TemporaryDirectory() as tmpdir:
+                    parent_path = Path(os.path.dirname(url_path))
+                    self.run_command(
                         [
                             "nancy",
-                            os.pathsep.join([args.document_root, tmpdir]),
-                            "-",
-                            f"--path={filename_file_url}",
+                            args.document_root,
+                            tmpdir,
+                            f"--path={parent_path}",
                         ],
                     )
-                    if output_file is None:
-                        return
-                    output_name = denancify(Path(output_file.decode("utf-8")))
-                    if input_path.name == str(output_name) and self.maybe_serve_file(
-                        input_path.parent / denancify(Path(filename.decode("utf-8"))),
-                        [os.fsdecode(filename)],
-                        url_path,
+                    output_files = os.listdir(tmpdir)
+                    if self.maybe_serve_file(
+                        Path(tmpdir) / input_path.name, output_files, url_path
                     ):
                         return
 
