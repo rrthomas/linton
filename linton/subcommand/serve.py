@@ -104,7 +104,7 @@ def run(args: argparse.Namespace) -> None:
             ):
                 return
 
-            # If that doesn't work, find all files whose names containing
+            # If that doesn't work, find all files whose names contain
             # commands in the same directory, and expand a file containing
             # each of them to find its expanded name, in case one expands to
             # the name we want.
