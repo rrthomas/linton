@@ -104,25 +104,27 @@ def run(args: argparse.Namespace) -> None:
             ):
                 return
 
-            # Otherwise, if the directory containing the file has at least
-            # one file with a command in its name, expand the whole
-            # directory, in case one expands to the name we want.
-            if len(glob.glob(b"*$*", root_dir=bytes(input_path.parent))) > 0:
+            # Otherwise, expand each file in the parent directory whose name
+            # contains a command, ignoring errors, and see if one expands to
+            # the name we want.
+            command_name_files = glob.glob("*$*", root_dir=input_path.parent)
+            if len(command_name_files) > 0:
                 with TemporaryDirectory() as tmpdir:
                     parent_path = Path(os.path.dirname(url_path))
-                    self.run_command(
-                        [
-                            "nancy",
-                            args.document_root,
-                            tmpdir,
-                            f"--path={parent_path}",
-                        ],
-                    )
-                    output_files = os.listdir(tmpdir)
-                    if self.maybe_serve_file(
-                        Path(tmpdir) / input_path.name, output_files, url_path
-                    ):
-                        return
+                    for f in command_name_files:
+                        self.run_command(
+                            [
+                                "nancy",
+                                args.document_root,
+                                tmpdir,
+                                f"--path={parent_path / f}",
+                            ],
+                        )
+                        output_files = os.listdir(tmpdir)
+                        if self.maybe_serve_file(
+                            Path(tmpdir) / input_path.name, output_files, url_path
+                        ):
+                            return
 
             # Otherwise, file is not found
             self.send_response(404)
