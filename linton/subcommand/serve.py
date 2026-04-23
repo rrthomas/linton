@@ -30,6 +30,8 @@ def run(args: argparse.Namespace) -> None:
     """'serve' command handler"""
 
     class HTTPRequestHandler(BaseHTTPRequestHandler):
+        error_output: bytes | None = None
+
         def serve_file(self, filename: Path, content: bytes) -> None:
             mime_type = guess_type(filename)[0] or "text/plain"
             self.send_response(200)
@@ -62,34 +64,33 @@ def run(args: argparse.Namespace) -> None:
             nancy_suffix = f".nancy{suffix}"
             nancy_source = filename.with_suffix(nancy_suffix)
             if nancy_source.name in filenames:
-                output = self.run_command(
-                    [
-                        "nancy",
-                        args.document_root,
-                        "-",
-                        f"--path={Path(url_path).parent / nancy_source.name}",
-                    ],
-                )
-                if output is None:
+                try:
+                    output = self.run_command(
+                        [
+                            "nancy",
+                            args.document_root,
+                            "-",
+                            f"--path={Path(url_path).parent / nancy_source.name}",
+                        ],
+                    )
+                    if output is not None:
+                        self.serve_file(Path(nancy_source), output)
                     return True
-                self.serve_file(Path(nancy_source), output)
-                return True
+                except subprocess.CalledProcessError as e:
+                    self.send_response(500)
+                    self.send_header("Content-Type", "text/html")
+                    self.end_headers()
+                    self.wfile.write(
+                        b"<html><head><title>Internal error</title><body><h1>Internal error</h1><pre>"
+                        + e.stderr
+                        + b"</pre></body></html>"
+                    )
 
             return False
 
         def run_command(self, cmd: list[str]) -> bytes | None:
-            try:
-                res = subprocess.run(cmd, capture_output=True, check=True)
-                return res.stdout
-            except subprocess.CalledProcessError as e:
-                self.send_response(500)
-                self.send_header("Content-Type", "text/html")
-                self.end_headers()
-                self.wfile.write(
-                    b"<html><head><title>Internal error</title><body><h1>Internal error</h1><pre>"
-                    + e.stderr
-                    + b"</pre></body></html>"
-                )
+            res = subprocess.run(cmd, capture_output=True, check=True)
+            return res.stdout
 
         def do_GET(self) -> None:
             """GET handler"""
@@ -112,14 +113,17 @@ def run(args: argparse.Namespace) -> None:
                 with TemporaryDirectory() as tmpdir:
                     parent_path = Path(os.path.dirname(url_path))
                     for f in command_name_files:
-                        self.run_command(
-                            [
-                                "nancy",
-                                args.document_root,
-                                tmpdir,
-                                f"--path={parent_path / f}",
-                            ],
-                        )
+                        try:
+                            self.run_command(
+                                [
+                                    "nancy",
+                                    args.document_root,
+                                    tmpdir,
+                                    f"--path={parent_path / f}",
+                                ],
+                            )
+                        except subprocess.CalledProcessError as e:
+                            self.error_output = e.stderr
                         output_files = os.listdir(tmpdir)
                         if self.maybe_serve_file(
                             Path(tmpdir) / input_path.name, output_files, url_path
@@ -130,9 +134,14 @@ def run(args: argparse.Namespace) -> None:
             self.send_response(404)
             self.send_header("Content-Type", "text/html")
             self.end_headers()
-            self.wfile.write(
-                b"<html><head><title>No such page</title><body>No such page</body></html>"
-            )
+            contents = b"<html><head><title>No such page</title><body><h1>No such page</h1></body></html>"
+            if self.error_output is not None:
+                contents = (
+                    b"<html><head><title>Error</title><body><h1>Error</h1><pre>"
+                    + self.error_output
+                    + b"</pre></body></html>"
+                )
+            self.wfile.write(contents)
 
     httpd = HTTPServer(("localhost", args.port), HTTPRequestHandler)
     (host, port, *_) = httpd.server_address
