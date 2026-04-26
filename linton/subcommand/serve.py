@@ -85,6 +85,7 @@ def run(args: argparse.Namespace) -> None:
                         + e.stderr
                         + b"</pre></body></html>"
                     )
+                    return True
 
             return False
 
