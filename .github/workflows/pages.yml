@@ -35,9 +35,9 @@ jobs:
           fetch-depth: 0 # Get all commits for setting page timestamps
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
+          python-version: "3.13"
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6
       - name: Install dependencies
         run: |
           sudo apt-get -y install python3-venv make linkchecker rsync
@@ -52,7 +52,7 @@ jobs:
           linton publish --base-url /linton/ ./doc ./_site
           linton serve --port $TEST_PORT ./doc & linkchecker http://localhost:$TEST_PORT/index.html
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
 
   # Deployment job
   deploy:
@@ -64,4 +64,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v6
