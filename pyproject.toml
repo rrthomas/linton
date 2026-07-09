@@ -12,7 +12,7 @@ requires-python = ">= 3.13"
 dependencies = [
     "linkchecker",
     "nancy ~= 15.0",
-    "mistletoe",
+    "markdown-it-py[plugins]",
 ]
 classifiers = [
     "Environment :: Console",

@@ -3,7 +3,8 @@
 
 import sys
 
-import mistletoe
+from markdown_it import MarkdownIt
 
 
-sys.stdout.write(mistletoe.markdown(sys.stdin))
+md = MarkdownIt()
+sys.stdout.write(md.render(sys.stdin.read()))
