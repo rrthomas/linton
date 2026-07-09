@@ -41,8 +41,10 @@
   }
 }
 
-/* Images align with text bottom by default */
+/* Images scale with container and align with text bottom by default */
 img {
+  max-width: 100%;
+  height: auto;
   vertical-align: text-bottom;
 }
 
