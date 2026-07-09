@@ -6,5 +6,5 @@ import sys
 from markdown_it import MarkdownIt
 
 
-md = MarkdownIt()
+md = MarkdownIt("commonmark", {"typographer": True}).enable("table").enable("smartquotes")
 sys.stdout.write(md.render(sys.stdin.read()))

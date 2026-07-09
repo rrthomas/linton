@@ -1,6 +1,6 @@
 # Installation
 
-To install Linton you’ll need Python.
+To install Linton you'll need Python.
 
 Then run the following command:
 
@@ -20,7 +20,7 @@ To create a new Linton web site, use:
 linton init DIRECTORY
 ```
 
-where `DIRECTORY` is the directory in which to write the new web site’s pages and ancillary files. Linton copies the default Linton site template files and a couple of sample pages into the directory you specify. See [Invocation](../Invocation/index.html) for more details.
+where `DIRECTORY` is the directory in which to write the new web site's pages and ancillary files. Linton copies the default Linton site template files and a couple of sample pages into the directory you specify. See [Invocation](../Invocation/index.html) for more details.
 
 Then, configure the page template as described in [Template](../Template/index.html).
 
