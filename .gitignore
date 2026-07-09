@@ -92,5 +92,8 @@ ENV/
 # Rope project settings
 .ropeproject
 
+# direnv
+.envrc
+
 # man page
 linton.1
