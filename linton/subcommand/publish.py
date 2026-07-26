@@ -26,6 +26,7 @@ def run(args: argparse.Namespace) -> None:
     if os.path.exists(args.output) and not (
         os.path.isdir(args.output) and len(os.listdir(args.output)) == 0
     ):
+        # No point adding --delete if the destination does not exist
         if args.force:
             cmd.append("--delete")
         else:
