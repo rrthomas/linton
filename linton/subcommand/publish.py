@@ -1,6 +1,6 @@
 """Linton 'publish' subcommand
 
-© Reuben Thomas <rrt@sc3d.org> 2024-2025
+© Reuben Thomas <rrt@sc3d.org> 2024-2026
 Released under the GPL version 3, or (at your option) any later version.
 """
 
@@ -20,6 +20,9 @@ def run(args: argparse.Namespace) -> None:
     if args.update:
         args.force = True
         cmd.append("--update")
+
+    # Pass --include and --exclude flags through
+    cmd.extend(args.patterns)
 
     # Check output either does not exist, or is an empty directory, unless
     # --force given
@@ -48,6 +51,14 @@ def run(args: argparse.Namespace) -> None:
         die(f"Error code {err.returncode} running: {' '.join(map(str, err.cmd))}")
 
 
+class PatternAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        assert option_string is not None
+        assert type(values) is str
+        namespace.patterns.append(option_string)
+        namespace.patterns.append(values)
+
+
 def add_subparser(subparsers: argparse._SubParsersAction) -> None:
     parser = subparsers.add_parser(
         "publish",
@@ -59,6 +70,18 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
         "--force",
         action="store_true",
         help="overwrite output directory even if it is not empty",
+    )
+    parser.add_argument(
+        "--include",
+        metavar="GLOB",
+        help="process files and directories matching GLOB",
+        action=PatternAction,
+    )
+    parser.add_argument(
+        "--exclude",
+        metavar="GLOB",
+        help="do not process files and directories matching GLOB",
+        action=PatternAction,
     )
     parser.add_argument(
         "-u",
@@ -81,4 +104,4 @@ def add_subparser(subparsers: argparse._SubParsersAction) -> None:
         "document_root", metavar="DIRECTORY", help="directory containing source files"
     )
     parser.add_argument("output", metavar="DIRECTORY", help="output directory")
-    parser.set_defaults(func=run)
+    parser.set_defaults(func=run, patterns=[])
