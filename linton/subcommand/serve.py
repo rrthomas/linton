@@ -6,6 +6,7 @@ Released under the GPL version 3, or (at your option) any later version.
 
 import argparse
 import glob
+import html
 import os
 import subprocess
 import urllib.parse
@@ -82,7 +83,7 @@ def run(args: argparse.Namespace) -> None:
                     self.end_headers()
                     self.wfile.write(
                         b"<html><head><title>Internal error</title><body><h1>Internal error</h1><pre>"
-                        + e.stderr
+                        + html.escape(e.stderr.decode("utf-8", "replace")).encode("utf-8")
                         + b"</pre></body></html>"
                     )
                     return True
