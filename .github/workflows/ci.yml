@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies (Ubuntu)
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        sudo apt-get -y install make linkchecker tox
+        sudo apt-get update && sudo apt-get -y install make linkchecker tox
     - name: Install dependencies (macOS)
       if: ${{ matrix.os == 'macos-latest' }}
       run: |
